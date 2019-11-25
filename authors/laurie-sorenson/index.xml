@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Laurie Sorenson | David Černý</title>
+    <link>/authors/laurie-sorenson/</link>
+      <atom:link href="/authors/laurie-sorenson/index.xml" rel="self" type="application/rss+xml" />
+    <description>Laurie Sorenson</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 12 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Laurie Sorenson</title>
+      <link>/authors/laurie-sorenson/</link>
+    </image>
+    
+    <item>
+      <title>Explosive diversification of marine fishes at the Cretaceous–Palaeogene boundary</title>
+      <link>/publication/alfaro_et_al_2018/</link>
+      <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/alfaro_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

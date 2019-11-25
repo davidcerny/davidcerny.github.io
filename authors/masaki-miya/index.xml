@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Masaki Miya | David Černý</title>
+    <link>/authors/masaki-miya/</link>
+      <atom:link href="/authors/masaki-miya/index.xml" rel="self" type="application/rss+xml" />
+    <description>Masaki Miya</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Masaki Miya</title>
+      <link>/authors/masaki-miya/</link>
+    </image>
+    
+    <item>
+      <title>A phylogenomic framework for pelagiarian fishes (Acanthomorpha: Percomorpha) highlights mosaic radiation in the open ocean</title>
+      <link>/publication/friedman_et_al_2019/</link>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/friedman_et_al_2019/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

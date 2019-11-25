@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>David Černý</title>
+    <link>/authors/admin/</link>
+      <atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <description>David Černý</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 23 Nov 2019 22:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>David Černý</title>
+      <link>/authors/admin/</link>
+    </image>
+    
+    <item>
+      <title>Hello world!</title>
+      <link>/post/first_post/</link>
+      <pubDate>Sat, 23 Nov 2019 22:00:00 +0000</pubDate>
+      <guid>/post/first_post/</guid>
+      <description>
+
+
+&lt;p&gt;More content coming soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A phylogenomic framework for pelagiarian fishes (Acanthomorpha: Percomorpha) highlights mosaic radiation in the open ocean</title>
+      <link>/publication/friedman_et_al_2019/</link>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/friedman_et_al_2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Inferring macroevolutionary dynamics of extinct clades: a test using ‘bird-hipped’ dinosaurs (Ornithischia)</title>
+      <link>/talk/evolution_2019/</link>
+      <pubDate>Sat, 22 Jun 2019 15:30:00 +0000</pubDate>
+      <guid>/talk/evolution_2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Applying Lanchester’s laws to the interspecific competition of coral reef fish</title>
+      <link>/publication/cerny_et_al_2018/</link>
+      <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A phylogenomic perspective on the robust capuchin monkey (Sapajus) radiation: First evidence for extensive population admixture across South America</title>
+      <link>/publication/lima_et_al_2018/</link>
+      <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/lima_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Explosive diversification of marine fishes at the Cretaceous–Palaeogene boundary</title>
+      <link>/publication/alfaro_et_al_2018/</link>
+      <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/alfaro_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

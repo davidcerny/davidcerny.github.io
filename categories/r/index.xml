@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | David Černý</title>
+    <link>/categories/r/</link>
+      <atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 23 Nov 2019 22:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>R</title>
+      <link>/categories/r/</link>
+    </image>
+    
+    <item>
+      <title>Hello world!</title>
+      <link>/post/first_post/</link>
+      <pubDate>Sat, 23 Nov 2019 22:00:00 +0000</pubDate>
+      <guid>/post/first_post/</guid>
+      <description>
+
+
+&lt;p&gt;More content coming soon!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thomas J. Near | David Černý</title>
+    <link>/authors/thomas-j.-near/</link>
+      <atom:link href="/authors/thomas-j.-near/index.xml" rel="self" type="application/rss+xml" />
+    <description>Thomas J. Near</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Thomas J. Near</title>
+      <link>/authors/thomas-j.-near/</link>
+    </image>
+    
+    <item>
+      <title>A phylogenomic framework for pelagiarian fishes (Acanthomorpha: Percomorpha) highlights mosaic radiation in the open ocean</title>
+      <link>/publication/friedman_et_al_2019/</link>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/friedman_et_al_2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Explosive diversification of marine fishes at the Cretaceous–Palaeogene boundary</title>
+      <link>/publication/alfaro_et_al_2018/</link>
+      <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/alfaro_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

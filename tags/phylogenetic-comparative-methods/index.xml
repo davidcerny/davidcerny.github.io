@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Phylogenetic comparative methods | David Černý</title>
+    <link>/tags/phylogenetic-comparative-methods/</link>
+      <atom:link href="/tags/phylogenetic-comparative-methods/index.xml" rel="self" type="application/rss+xml" />
+    <description>Phylogenetic comparative methods</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Phylogenetic comparative methods</title>
+      <link>/tags/phylogenetic-comparative-methods/</link>
+    </image>
+    
+    <item>
+      <title>A phylogenomic framework for pelagiarian fishes (Acanthomorpha: Percomorpha) highlights mosaic radiation in the open ocean</title>
+      <link>/publication/friedman_et_al_2019/</link>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/friedman_et_al_2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Applying Lanchester’s laws to the interspecific competition of coral reef fish</title>
+      <link>/publication/cerny_et_al_2018/</link>
+      <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_al_2018/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
