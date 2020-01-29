@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="More content coming soon!">
+  <meta name="description" content="The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages.">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/first_post/">
@@ -111,14 +111,14 @@
   
   <meta property="og:site_name" content="David Černý">
   <meta property="og:url" content="/post/first_post/">
-  <meta property="og:title" content="Hello world! | David Černý">
-  <meta property="og:description" content="More content coming soon!"><meta property="og:image" content="/post/first_post/featured.png">
+  <meta property="og:title" content="Visualizing BEAST 2 time trees | David Černý">
+  <meta property="og:description" content="The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages."><meta property="og:image" content="/post/first_post/featured.png">
   <meta property="twitter:image" content="/post/first_post/featured.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2019-11-23T22:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-01-28T22:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2019-11-23T22:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-01-28T22:00:00&#43;00:00">
   
 
   
@@ -146,14 +146,14 @@
     "@type": "WebPage",
     "@id": "/post/first_post/"
   },
-  "headline": "Hello world!",
+  "headline": "Visualizing BEAST 2 time trees",
   
   "image": [
     "/post/first_post/featured.png"
   ],
   
-  "datePublished": "2019-11-23T22:00:00Z",
-  "dateModified": "2019-11-23T22:00:00Z",
+  "datePublished": "2020-01-28T22:00:00Z",
+  "dateModified": "2020-01-28T22:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -168,7 +168,7 @@
       "url": "/img/icon-512.png"
     }
   },
-  "description": "More content coming soon!"
+  "description": "The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages."
 }
 </script>
 
@@ -186,7 +186,7 @@
 
 
 
-  <title>Hello world! | David Černý</title>
+  <title>Visualizing BEAST 2 time trees | David Černý</title>
 
 </head>
 
@@ -493,7 +493,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>Hello world!</h1>
+  <h1>Visualizing BEAST 2 time trees</h1>
 
   
 
@@ -524,7 +524,7 @@
     
       
     
-    Nov 23, 2019
+    Jan 28, 2020
   </span>
   
 
@@ -533,7 +533,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    9 min read
   </span>
   
 
@@ -586,7 +586,205 @@
       
 
 
-<p>More content coming soon!</p>
+<p>The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or <code>plot.phylo()</code> is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages.</p>
+<div id="starting-point-strap" class="section level2">
+<h2>Starting point: <code>strap</code></h2>
+<p>The <code>geoscalePhylo()</code> function from the <code>strap</code> package (Bell &amp; Lloyd 2014) is well-known and widely used. It plots a time tree against a nice colorful timescale (the colors are the official color codes of the Commission for the Geological Map of the World), and includes other niceties inherited from <code>plot.phylo()</code>, such as automatically stripping tip names of underscores and printing them in italics. One of the nice options we have at our disposal with <code>geoscalePhylo()</code> is to visualize the uncertainty in the ages of not just the internal nodes (we do that below), but also the tips. We can do that using an age range table like the one below:</p>
+<pre class="r"><code>if(!require(&quot;kableExtra&quot;)) {install.packages(&quot;kableExtra&quot;)}
+library(kableExtra)
+
+age_table &lt;- read.table(&quot;~/age_ranges.txt&quot;, stringsAsFactors = F)
+
+head(age_table)</code></pre>
+<pre><code>##                              V1    V2    V3
+## 1         Abrictosaurus_consors 190.8 201.3
+## 2       Agilisaurus_louderbacki 163.5 170.3
+## 3 Albalophosaurus_yamaguchiorum 132.9 139.8
+## 4           Aquilops_americanus  99.6 109.0
+## 5       Archaeoceratops_oshimai 113.0 129.4
+## 6        Auroraceratops_rugosus 100.5 129.4</code></pre>
+<p>We need to reshuffle our age range table a bit, since <code>geoscalePhylo()</code> needs a matrix whose first and last appearance dates are in the right order:</p>
+<pre class="r"><code>if(!require(&quot;phytools&quot;)) {install.packages(&quot;phytools&quot;)}
+if(!require(&quot;strap&quot;)) {install.packages(&quot;strap&quot;)}
+library(phytools)
+library(strap)
+
+my_ages &lt;- cbind(as.numeric(age_table[,3]), as.numeric(age_table[,2]))
+colnames(my_ages) &lt;- c(&quot;FAD&quot;, &quot;LAD&quot;)
+rownames(my_ages) &lt;- age_table[,1]
+
+tree &lt;- read.nexus(&quot;~/my_MCC_tree.tre&quot;)
+
+# geoscalePhylo() needs the $root.time element for plotting
+tree$root.time &lt;- max(nodeHeights(tree)) + 66.0
+
+geoscalePhylo(tree, ages = my_ages, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)</code></pre>
+<p><img src="/post/First_post/index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<p>Internally, <code>geoscalePhylo()</code> calls the <code>plot.phylo()</code> function bundled with <code>ape</code>, and so it accepts all of the latter’s arguments. We can make use of this to highlight clades.</p>
+<p>Let’s assume that we have a list where each clade to be highlighted gets a pair of “anchors”, whose MRCA is also the MRCA of the entire clade – like this one:</p>
+<pre class="r"><code>my_dino_list &lt;- list(c(&quot;Abrictosaurus_consors&quot;, &quot;Tianyulong_confuciusi&quot;),
+                     c(&quot;Goyocephale_lattimorei&quot;, &quot;Wannanosaurus_yansiensis_&quot;),
+                     c(&quot;Camptosaurus_dispar&quot;, &quot;Dryosaurus_altus_&quot;),
+                     c(&quot;Changchunsaurus_parvus&quot;, &quot;Hypsilophodon_foxii_&quot;),
+                     c(&quot;Aquilops_americanus&quot;, &quot;Xuanhuaceratops_niei&quot;),
+                     c(&quot;Euoplocephalus_tutus&quot;, &quot;Gargoyleosaurus_parkpinorum&quot;),
+                     c(&quot;Hesperosaurus_mjosi&quot;, &quot;Isaberrysaura_mollensis&quot;))</code></pre>
+<p>What we want to do is (1) find the MRCA of each vector of tip names in the list, (2) assign a certain color to all tips descended from that node, and (3) assign the same color to all branches descended from it. The former is pretty easy:</p>
+<pre class="r"><code>tip.coloring &lt;- function(tree, clade_list, group_cols) {
+  cols &lt;- rep(&quot;black&quot;, length(tree$tip.label))
+  for(i in 1:length(clade_list)) {
+    clade_mrca &lt;- getMRCA(tree, clade_list[[i]])
+    all_dscndn &lt;- phytools::getDescendants(tree, clade_mrca)
+    tips_only &lt;- all_dscndn[all_dscndn &lt;= Ntip(tree)] 
+    cols[tips_only] &lt;- group_cols[i]
+  }
+  return(cols)  
+}</code></pre>
+<p>Here, we are assuming that the user specifies which color to assign to which clade, rather than creating the colors within the function itself. An additional step is involved when we need to filter the descendant nodes down to tips only: we could get rid of it by using a different function, like <code>Descendants()</code> from <code>phangorn</code> (Schliep 2010), which takes node type as an argument. Here, we exploit the fact that in many of the R packages dealing with phylogenetic trees, the labeling of the nodes assigns numbers from 1 to <span class="math inline">\(n\)</span> to the tips (leaves), <span class="math inline">\(n+1\)</span> to the root, and <span class="math inline">\(n+2\)</span> thru <span class="math inline">\(2n-1\)</span> to the remaining internal nodes. Conversely, we can count on the fact that nodes labeled with numbers less than or equal to <span class="math inline">\(n\)</span> are the tips.</p>
+<p>The step that consists of coloring all branches descended from the same MRCA is more involved. Fortunately, the indefatigable Liam Revell provided code that does just that in one of the posts on his excellent phytools blog:</p>
+<p><a href="http://blog.phytools.org/2017/04/coloring-edges-of-plotted-trees-in.html" class="uri">http://blog.phytools.org/2017/04/coloring-edges-of-plotted-trees-in.html</a></p>
+<p>Here, we simply package that code into a function analogous to the one shown above:</p>
+<pre class="r"><code>branch.coloring &lt;- function(tree, clade_list, group_cols) {
+  cols &lt;- rep(&quot;black&quot;, nrow(tree$edge))
+  for(i in 1:length(clade_list)) {
+    clade_mrca &lt;- getMRCA(tree, clade_list[[i]])
+    all_dscndn &lt;- phytools::getDescendants(tree, clade_mrca)
+    cols[sapply(all_dscndn, function(x, y) which(y == x), y = tree$edge[,2])] &lt;- group_cols[i]
+  }
+  return(cols)
+}</code></pre>
+</div>
+<div id="adding-hpds-phyloch-and-weird-loops" class="section level2">
+<h2>Adding HPDs: <code>phyloch</code> and weird loops</h2>
+<p>The next thing we’d like to do than can’t be done easily using any of the many available <code>geoscalePhylo</code> arguments is to add 95% highest posterior density (HPD) intervals to the nodes on our tree.</p>
+<p>The first step is to extract the needed information from the annotated Nexus file produced by TreeAnnotator. There used to be several options for parsing such files; my favorite one was probably <code>read.annotated.nexus()</code> from the <code>OutbreakTools</code> library (Jombart et al. 2014), which unfortunately seems to have lately fallen victim to package dependency troubles. Nevertheless, the <code>read.beast()</code> function from the <code>phyloch</code> package (Heibl 2013) provides a great alternative. Note that we might want to define a new “annotation” (more accurately, add a new element to the list by which the tree is internally represented in R) that doesn’t care about how exactly we got our HPDs (from common ancestor heights? from median heights?) and that can be further manipulated:</p>
+<pre class="r"><code>if(!require(&quot;phyloch&quot;)) {install.packages(&quot;phyloch&quot;)}
+library(phyloch)
+
+annot_tree &lt;- phyloch::read.beast(&quot;~/my_MCC_tree.tre&quot;)
+
+# If the Nexus file has common ancestor node heights in it, extract those; otherwise extract
+# the mean/median ones.
+
+if (is.null(annot_tree$`CAheight_95%_HPD_MIN`)) {
+  annot_tree$min_ages &lt;- annot_tree$`height_95%_HPD_MIN`
+  annot_tree$max_ages &lt;- annot_tree$`height_95%_HPD_MAX`
+} else {
+  annot_tree$min_ages &lt;- annot_tree$`CAheight_95%_HPD_MIN`
+  annot_tree$max_ages &lt;- annot_tree$`CAheight_95%_HPD_MAX`
+}</code></pre>
+<p>We can also add an arbitrary offset to these ages without overriding the original annotations. Recently, a new class called <code>TreeWOffset</code> <a href="http://github.com/CompEvol/sampled-ancestors/blob/master/src/beast/evolution/tree/TreeWOffset.java">was introduced into BEAST 2</a> to store the age of the youngest tip. This comes in handy when our tree is entirely extinct, and we have age ranges (i.e., age uncertainties) associated with all tips including the youngest one(s). This class allows such tip(s) to still be sampled from their ranges, effectively leading to the estimation of the “offset” of the tree from the present. Perhaps it is this offset that we want to add to the boundaries of our HPDs. Below, we assume that we have already summarized the posterior of all continuous parameters (including the offset) using LogAnalyser or a similar utility, and printed the results to a parsable text file. The TreeAnnotator-produced Nexus file is of no help here.</p>
+<pre class="r"><code>params &lt;- read.table(&quot;~/loganalyser_params.txt&quot;, header = T, stringsAsFactors = F)
+
+# Check whether &#39;offset&#39; was actually used and logged:
+
+if (length(params$mean[params$statistic == &quot;offset&quot;] != 0)) {
+  offset &lt;- params$mean[params$statistic == &quot;offset&quot;]
+  annot_tree$min_ages &lt;- annot_tree$min_ages + offset
+  annot_tree$max_ages &lt;- annot_tree$max_ages + offset
+}</code></pre>
+<p>The most complicated steps consists of using this info to actually draw the HPDs – this is often done using half-transparent color bars – around the nodes. The basis for what we are going to do is again provided by Liam Revell:</p>
+<p><a href="http://blog.phytools.org/2017/03/error-bars-on-divergence-times-on.html" class="uri">http://blog.phytools.org/2017/03/error-bars-on-divergence-times-on.html</a></p>
+<p>However, as we see below, our attempt to simply reuse the code given in the blog post does not produce satisfying results:</p>
+<pre class="r"><code>annot_tree$root.time &lt;- max(nodeHeights(annot_tree)) + 66.0
+geoscalePhylo(annot_tree, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
+
+T1 &lt;- get(&quot;last_plot.phylo&quot;, envir = .PlotPhyloEnv)
+
+for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
+  lines(x = c(annot_tree$min_ages[i - Ntip(annot_tree)],
+              annot_tree$max_ages[i - Ntip(annot_tree)]),
+        y = rep(T1$yy[i], 2), lwd = 6, lend = 0,
+        col = make.transparent(&quot;blue&quot;, 0.4))
+}</code></pre>
+<p><img src="/post/First_post/index_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with any <em>nodes</em>, and instead just float freely over the tree. What’s happening here?</p>
+<p>The answer is that the HPDs are reflected about a vertical axis in the middle of the plot. It turns out that we need to subtract both of their endpoints from the root age to fix this:</p>
+<pre class="r"><code>geoscalePhylo(annot_tree, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
+
+T1 &lt;- get(&quot;last_plot.phylo&quot;, envir = .PlotPhyloEnv)
+
+for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
+  lines(x = c(T1$root.time - annot_tree$min_ages[i - Ntip(annot_tree)],
+              T1$root.time - annot_tree$max_ages[i - Ntip(annot_tree)]),
+        y = rep(T1$yy[i], 2), lwd = 6, lend = 0,
+        col = make.transparent(&quot;blue&quot;, 0.4))
+}</code></pre>
+<p><img src="/post/First_post/index_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
+<p>Much better!</p>
+</div>
+<div id="putting-it-all-together" class="section level2">
+<h2>Putting it all together</h2>
+<p>Aside from what we went over above, the function below also parameterizes at what ages to start and stop plotting (so far we’ve used the fixed values of 20 and 240, respectively), automatically draws the right number of colors to highlight clades with from the good-looking <code>viridis</code> palette, and annotates notes with their posterior probabilities:</p>
+<pre class="r"><code>if(!require(&quot;viridis&quot;)) {install.packages(&quot;viridis&quot;)}
+library(viridis)
+
+beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
+  
+  base_tree &lt;- read.nexus(paste(basepath, &quot;my_MCC_tree.tre&quot;, sep = &quot;&quot;))
+  annot_tree &lt;- phyloch::read.beast(paste(basepath, &quot;my_MCC_tree.tre&quot;, sep = &quot;&quot;))
+  age_table &lt;- read.table(paste(basepath, &quot;age_ranges.txt&quot;, sep = &quot;&quot;), stringsAsFactors = F)
+  params &lt;- read.table(paste(basepath, &quot;loganalyser_params.txt&quot;, sep = &quot;&quot;),
+                       header = T, stringsAsFactors = F)
+  
+  if (is.null(annot_tree$`CAheight_95%_HPD_MIN`)) {
+    annot_tree$min_ages &lt;- annot_tree$`height_95%_HPD_MIN`
+    annot_tree$max_ages &lt;- annot_tree$`height_95%_HPD_MAX`
+  } else {
+    annot_tree$min_ages &lt;- annot_tree$`CAheight_95%_HPD_MIN`
+    annot_tree$max_ages &lt;- annot_tree$`CAheight_95%_HPD_MAX`
+  }
+  
+  base_tree$root.time &lt;- max(nodeHeights(base_tree))
+  base_tree$node.label &lt;- round(annot_tree$posterior, 2)
+  
+  if (length(params$mean[params$statistic == &quot;offset&quot;] != 0)) {
+    offset &lt;- params$mean[params$statistic == &quot;offset&quot;]
+    base_tree$root.time &lt;- base_tree$root.time + offset
+    annot_tree$min_ages &lt;- annot_tree$min_ages + offset
+    annot_tree$max_ages &lt;- annot_tree$max_ages + offset      
+  } else {
+    base_tree$root.time &lt;- base_tree$root.time + 66.0
+    annot_tree$min_ages &lt;- annot_tree$min_ages + 66.0
+    annot_tree$max_ages &lt;- annot_tree$max_ages + 66.0
+  }
+  
+  age_mat &lt;- cbind(as.numeric(age_table[,3]), as.numeric(age_table[,2]))
+  rownames(age_mat) &lt;- age_table[,1]
+  colnames(age_mat) &lt;- c(&quot;FAD&quot;, &quot;LAD&quot;)
+  
+  clade_cols &lt;- viridis(length(clade_list), option = &quot;D&quot;)
+  br_cols &lt;- branch.coloring(base_tree, clade_list, clade_cols)
+  tip_cols &lt;- tip.coloring(base_tree, clade_list, clade_cols)
+
+  geoscalePhylo(tree = base_tree, ages = age_mat, units = c(&quot;Period&quot;, &quot;Epoch&quot;, &quot;Age&quot;), 
+                boxes = &quot;Epoch&quot;, cex.tip = 0.7, cex.age = 1.3, cex.ts = 1, width = 2,
+                x.lim = c(xmin, xmax), edge.color = br_cols, tip.color = tip_cols)
+  nodelabels(base_tree$node.label)
+  T1 &lt;- get(&quot;last_plot.phylo&quot;, envir = .PlotPhyloEnv)
+  
+  # Get shaded bars for the HPD intervals. Credit:
+  # http://blog.phytools.org/2017/03/error-bars-on-divergence-times-on.html
+  for(i in (Ntip(base_tree) + 1):(base_tree$Nnode + Ntip(base_tree))) {
+    lines(x = c(T1$root.time - annot_tree$min_ages[i - Ntip(base_tree)],
+                T1$root.time - annot_tree$max_ages[i - Ntip(base_tree)]),
+          y = rep(T1$yy[i], 2), lwd = 6, lend = 0,
+          col = make.transparent(&quot;blue&quot;, 0.4))
+  }
+}</code></pre>
+<p>Let’s try it out!</p>
+<pre class="r"><code>beast.plotter(&quot;~/&quot;, my_dino_list, 20, 240)</code></pre>
+<p><img src="/post/First_post/index_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+</div>
+<div id="refs" class="section level2">
+<h2>Refs</h2>
+<ul>
+<li>Bell MA, Lloyd GT 2014 strap: an R package for plotting phylogenies against stratigraphy and assessing their stratigraphic congruence. <em>Palaeontol</em> 58(2)2: 379–389</li>
+<li>Heibl C 2013 <a href="http://www.christophheibl.de/Rpackages.html" class="uri">http://www.christophheibl.de/Rpackages.html</a>. Accessed 2020-01-29</li>
+<li>Jombart T, Aanensen DM, Baguelin M, Birrell P, Cauchemez S, Camacho A, Colijn C, Collins C, Cori A, Didelot X, Fraser C, Frost S, Hens N, Hugues J, Höhle M, Opatowski L, Rambaut A, Ratmann O, Soubeyrand S, Suchard MA, Wallinga J, Ypma R, Ferguson N 2014 OutbreakTools: a new platform for disease outbreak analysis using the R software. <em>Epidemics</em> 7: 28–34</li>
+<li>Schliep KP 2010 phangorn: phylogenetic analysis in R. <em>Bioinform</em> 27(4): 592–593</li>
+</ul>
+</div>
 
     </div>
 
@@ -609,7 +807,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/first_post/&amp;text=Hello%20world!" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/first_post/&amp;text=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -622,7 +820,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/first_post/&amp;t=Hello%20world!" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/first_post/&amp;t=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -635,7 +833,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Hello%20world!&amp;body=/post/first_post/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Visualizing%20BEAST%202%20time%20trees&amp;body=/post/first_post/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -648,7 +846,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/first_post/&amp;title=Hello%20world!" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/first_post/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -661,7 +859,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Hello%20world!%20/post/first_post/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Visualizing%20BEAST%202%20time%20trees%20/post/first_post/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -674,7 +872,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/first_post/&amp;title=Hello%20world!" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/first_post/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
