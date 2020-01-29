@@ -31,7 +31,7 @@
   <meta name="description" content="The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/first_post/">
+  <link rel="alternate" hreflang="en-us" href="/post/plotting_beast/">
 
   
 
@@ -98,23 +98,22 @@
   <link rel="icon" type="image/png" href="/img/icon-32.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/first_post/">
+  <link rel="canonical" href="/post/plotting_beast/">
 
   
   
   
   
     
-    
   
   
-  <meta property="twitter:card" content="summary">
+  <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="David Černý">
-  <meta property="og:url" content="/post/first_post/">
+  <meta property="og:url" content="/post/plotting_beast/">
   <meta property="og:title" content="Visualizing BEAST 2 time trees | David Černý">
-  <meta property="og:description" content="The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages."><meta property="og:image" content="/img/icon-192.png">
-  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or plot.phylo() is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made those by combining several existing R packages."><meta property="og:image" content="/post/plotting_beast/featured.png">
+  <meta property="twitter:image" content="/post/plotting_beast/featured.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2020-01-28T22:00:00&#43;00:00">
@@ -145,9 +144,13 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/post/first_post/"
+    "@id": "/post/plotting_beast/"
   },
   "headline": "Visualizing BEAST 2 time trees",
+  
+  "image": [
+    "/post/plotting_beast/featured.png"
+  ],
   
   "datePublished": "2020-01-28T22:00:00Z",
   "dateModified": "2020-01-28T22:00:00Z",
@@ -475,18 +478,26 @@
 
 
 
-  
+
+
+
+
+
+
+
 
   
   
+    
   
+
+
 <div class="article-container pt-3">
   <h1>Visualizing BEAST 2 time trees</h1>
 
   
 
   
-    
 
 
 <div class="article-metadata">
@@ -530,7 +541,7 @@
   
   
   <span class="middot-divider"></span>
-  <a href="/post/first_post/#disqus_thread"></a>
+  <a href="/post/plotting_beast/#disqus_thread"></a>
   
 
   
@@ -542,22 +553,29 @@
 
 </div>
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 600px;">
+  <div style="position: relative">
+    <img src="/post/plotting_beast/featured_hucb60dd04c5298de0f233b0fe4e6afeae_1013211_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    
+  </div>
 </div>
 
 
@@ -601,7 +619,7 @@ tree &lt;- read.nexus(&quot;~/my_MCC_tree.tre&quot;)
 tree$root.time &lt;- max(nodeHeights(tree)) + 66.0
 
 geoscalePhylo(tree, ages = my_ages, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)</code></pre>
-<p><img src="/post/first_post/index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
 <p>Internally, <code>geoscalePhylo()</code> calls the <code>plot.phylo()</code> function bundled with <code>ape</code>, and so it accepts all of the latter’s arguments. We can make use of this to highlight clades.</p>
 <p>Let’s assume that we have a list where each clade to be highlighted gets a pair of “anchors”, whose MRCA is also the MRCA of the entire clade – like this one:</p>
 <pre class="r"><code>my_dino_list &lt;- list(c(&quot;Abrictosaurus_consors&quot;, &quot;Tianyulong_confuciusi&quot;),
@@ -679,7 +697,7 @@ for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
         y = rep(T1$yy[i], 2), lwd = 6, lend = 0,
         col = make.transparent(&quot;blue&quot;, 0.4))
 }</code></pre>
-<p><img src="/post/first_post/index_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 <p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with any <em>nodes</em>, and instead just float freely over the tree. What’s happening here?</p>
 <p>The answer is that the HPDs are reflected about a vertical axis in the middle of the plot. It turns out that we need to subtract both of their endpoints from the root age to fix this:</p>
 <pre class="r"><code>geoscalePhylo(annot_tree, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
@@ -692,7 +710,7 @@ for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
         y = rep(T1$yy[i], 2), lwd = 6, lend = 0,
         col = make.transparent(&quot;blue&quot;, 0.4))
 }</code></pre>
-<p><img src="/post/first_post/index_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
+<p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
 <p>Much better!</p>
 </div>
 <div id="putting-it-all-together" class="section level2">
@@ -756,7 +774,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
 }</code></pre>
 <p>Let’s try it out!</p>
 <pre class="r"><code>beast.plotter(&quot;~/&quot;, my_dino_list, 20, 240)</code></pre>
-<p><img src="/post/first_post/index_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+<p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
 </div>
 <div id="refs" class="section level2">
 <h2>Refs</h2>
@@ -789,7 +807,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/first_post/&amp;text=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/plotting_beast/&amp;text=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -802,7 +820,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/first_post/&amp;t=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/plotting_beast/&amp;t=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -815,7 +833,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="mailto:?subject=Visualizing%20BEAST%202%20time%20trees&amp;body=/post/first_post/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Visualizing%20BEAST%202%20time%20trees&amp;body=/post/plotting_beast/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -828,7 +846,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/first_post/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/plotting_beast/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -841,7 +859,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Visualizing%20BEAST%202%20time%20trees%20/post/first_post/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Visualizing%20BEAST%202%20time%20trees%20/post/plotting_beast/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -854,7 +872,7 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/first_post/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/plotting_beast/&amp;title=Visualizing%20BEAST%202%20time%20trees" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1109,16 +1127,6 @@ beast.plotter &lt;- function(basepath, clade_list, xmin, xmax) {
   
   <div class="container">
     <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">
