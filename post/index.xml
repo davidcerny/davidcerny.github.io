@@ -52,7 +52,7 @@ tree &amp;lt;- read.nexus(&amp;quot;~/my_MCC_tree.tre&amp;quot;)
 # geoscalePhylo() needs the $root.time element for plotting
 tree$root.time &amp;lt;- max(nodeHeights(tree)) + 66.0
 
-geoscalePhylo(ladderize(tree, right = F), ages = my_ages, x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)&lt;/code&gt;&lt;/pre&gt;
+geoscalePhylo(ladderize(tree, right = F), ages = my_ages, x.lim = c(0, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/plotting_beast/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Internally, &lt;code&gt;geoscalePhylo()&lt;/code&gt; calls the &lt;code&gt;plot.phylo()&lt;/code&gt; function bundled with &lt;code&gt;ape&lt;/code&gt;, and so it accepts all of the latter’s arguments. We can make use of this to highlight clades.&lt;/p&gt;
 &lt;p&gt;Let’s assume that we have a list where each clade to be highlighted gets a pair of “anchors”, whose MRCA is also the MRCA of the entire clade – like this one:&lt;/p&gt;
@@ -149,7 +149,7 @@ for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
 &lt;/div&gt;
 &lt;div id=&#34;putting-it-all-together&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Putting it all together&lt;/h2&gt;
-&lt;p&gt;Aside from what we went over above, the function below also parameterizes at what ages to start and stop plotting (so far we’ve used the fixed values of 20 and 240, respectively), automatically draws the right number of colors to highlight clades with from the good-looking &lt;code&gt;viridis&lt;/code&gt; palette, and annotates nodes with their posterior probabilities:&lt;/p&gt;
+&lt;p&gt;Aside from what we went over above, the function below also parameterizes at what ages to start and stop plotting (so far we’ve been using fixed values for these), automatically draws the right number of colors to highlight clades with from the good-looking &lt;code&gt;viridis&lt;/code&gt; palette, and annotates nodes with their posterior probabilities:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if(!require(&amp;quot;viridis&amp;quot;)) {install.packages(&amp;quot;viridis&amp;quot;)}
 library(viridis)
 
@@ -208,7 +208,7 @@ beast.plotter &amp;lt;- function(basepath, clade_list, xmin, xmax) {
   }
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Let’s try it out!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;beast.plotter(&amp;quot;~/&amp;quot;, my_dino_list, 20, 240)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;beast.plotter(&amp;quot;~/&amp;quot;, my_dino_list, 10, 240)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/plotting_beast/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;refs&#34; class=&#34;section level2&#34;&gt;
