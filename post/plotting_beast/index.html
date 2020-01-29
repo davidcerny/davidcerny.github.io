@@ -698,7 +698,7 @@ for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
         col = make.transparent(&quot;blue&quot;, 0.4))
 }</code></pre>
 <p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
-<p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with any <em>nodes</em>, and instead just float freely over the tree. What’s happening here?</p>
+<p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with <em>any</em> nodes, and instead just float freely over the tree. What’s happening here?</p>
 <p>The answer is that the HPDs are reflected about a vertical axis in the middle of the plot. It turns out that we need to subtract both of their endpoints from the root age to fix this:</p>
 <pre class="r"><code>geoscalePhylo(ladderize(annot_tree, right = F), x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
 
