@@ -5,24 +5,12 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>David Černý</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 23 Nov 2019 22:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>David Černý</title>
       <link>/</link>
     </image>
-    
-    <item>
-      <title>Hello world!</title>
-      <link>/post/first_post/</link>
-      <pubDate>Sat, 23 Nov 2019 22:00:00 +0000</pubDate>
-      <guid>/post/first_post/</guid>
-      <description>
-
-
-&lt;p&gt;More content coming soon!&lt;/p&gt;
-</description>
-    </item>
     
     <item>
       <title>A phylogenomic framework for pelagiarian fishes (Acanthomorpha: Percomorpha) highlights mosaic radiation in the open ocean</title>

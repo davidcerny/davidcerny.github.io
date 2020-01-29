@@ -5,7 +5,7 @@
     <link>/authors/</link>
       <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 23 Nov 2019 22:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Authors</title>
@@ -15,7 +15,7 @@
     <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Sat, 23 Nov 2019 22:00:00 +0000</pubDate>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
       <guid>/authors/admin/</guid>
       <description>&lt;p&gt;I am interested in the development, evaluation, and application of phylogenetic methods, using Bayesian statistics as an overarching framework and fossil as well as extant vertebrates as my model system. My current research projects include testing the performance of existing methods for diversification rate estimation on extinct clades, and developing a fast and flexible Bayesian method for estimating dated supertrees.&lt;/p&gt;
 
