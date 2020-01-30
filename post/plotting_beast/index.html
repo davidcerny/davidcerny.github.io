@@ -683,7 +683,7 @@ if (length(params$mean[params$statistic == &quot;offset&quot;] != 0)) {
   annot_tree$min_ages &lt;- annot_tree$min_ages + offset
   annot_tree$max_ages &lt;- annot_tree$max_ages + offset
 }</code></pre>
-<p>The most complicated step consists of using this info to actually draw the HPDs – this is often done using half-transparent color bars – around the nodes. The basis for what we are going to do is again <a href="http://blog.phytools.org/2017/03/error-bars-on-divergence-times-on.html">provided by Liam Revell</a>:</p>
+<p>The most complicated step consists of using this info to actually draw the HPDs – this is often done using half-transparent color bars – around the nodes. The basis for what we are going to do is again <a href="http://blog.phytools.org/2017/03/error-bars-on-divergence-times-on.html">provided by Liam Revell</a>.</p>
 <p>However, as we see below, our attempt to simply reuse the code given in the blog post does not produce satisfying results:</p>
 <pre class="r"><code>annot_tree$root.time &lt;- max(nodeHeights(annot_tree)) + 66.0
 geoscalePhylo(ladderize(annot_tree, right = F), x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
@@ -697,7 +697,7 @@ for(i in (Ntip(annot_tree) + 1):(annot_tree$Nnode + Ntip(annot_tree))) {
         col = make.transparent(&quot;blue&quot;, 0.4))
 }</code></pre>
 <p><img src="/post/plotting_beast/index_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
-<p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with <em>any</em> nodes, and instead just float freely over the tree. What’s happening here?</p>
+<p>Yes, our HPDs are clearly horrifyingly wide, but they are also not associated with the right nodes – in fact, they are not associated with <em>any</em> nodes, and instead just float freely over the tree. What’s going on here?</p>
 <p>The answer is that the HPDs are reflected about a vertical axis in the middle of the plot. It turns out that we need to subtract both of their endpoints from the root age to fix this:</p>
 <pre class="r"><code>geoscalePhylo(ladderize(annot_tree, right = F), x.lim = c(20, 240), cex.tip = 0.7, cex.age = 1.3, cex.ts = 1)
 
