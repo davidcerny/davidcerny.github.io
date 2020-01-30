@@ -187,8 +187,8 @@ beast.plotter &amp;lt;- function(basepath, clade_list, xmin, xmax) {
   colnames(age_mat) &amp;lt;- c(&amp;quot;FAD&amp;quot;, &amp;quot;LAD&amp;quot;)
   
   clade_cols &amp;lt;- viridis(length(clade_list), option = &amp;quot;D&amp;quot;)
-  br_cols &amp;lt;- branch.coloring(ladderize(base_tree), clade_list, clade_cols)
-  tip_cols &amp;lt;- tip.coloring(ladderize(base_tree), clade_list, clade_cols)
+  br_cols &amp;lt;- branch.coloring(ladderize(base_tree, right = F), clade_list, clade_cols)
+  tip_cols &amp;lt;- tip.coloring(ladderize(base_tree, right = F), clade_list, clade_cols)
 
   geoscalePhylo(tree = ladderize(base_tree, right = F), ages = age_mat,
                 units = c(&amp;quot;Period&amp;quot;, &amp;quot;Epoch&amp;quot;, &amp;quot;Age&amp;quot;), boxes = &amp;quot;Epoch&amp;quot;, cex.tip = 0.7,
