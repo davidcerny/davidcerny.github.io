@@ -589,8 +589,8 @@
 <p>The summary of the posterior from a Bayesian tip-dating analysis – e.g., the maximum clade credibility tree computed by TreeAnnotator from a BEAST 2 posterior – usually provides a whole wealth of information to the user, and while barebones, quick-and-dirty plotting of the results using FigTree or <code>plot.phylo()</code> is good enough for assessing whether the results are reasonable or not, it definitely doesn’t provide publication-quality figures. Below, I’ll try to show how such figures can be made by combining several existing R packages.</p>
 <div id="starting-point-strap" class="section level2">
 <h2>Starting point: <code>strap</code></h2>
-<p>The <code>geoscalePhylo()</code> function from the <code>strap</code> package (Bell &amp; Lloyd 2014) is well-known and widely used. It plots a time tree against a nice colorful timescale (the colors are the official color codes of the Commission for the Geological Map of the World), and includes other niceties inherited from <code>plot.phylo()</code>, such as automatically stripping tip names of underscores and printing them in italics. One of the cool options we have at our disposal with <code>geoscalePhylo()</code> is to visualize the uncertainty in the ages of not just the internal nodes (we do that further down below), but also the tips.* We can do that using an age range table like the one below:</p>
-<p><strong>Note:</strong> As pointed out on Facebook by David Bapst, the <code>ages</code> argument of <code>geoscalePhylo()</code> serves primarily for visualizing taxon durations in the fossil record; i.e., the time intervals between their first and last appearance. If a taxon is only known from a single stratigraphically unique occurrence, its first and last appearance will coincide; however, the age uncertainty associated with that appearance can still be usefully represented using a range. This is what we’re doing below.</p>
+<p>The <code>geoscalePhylo()</code> function from the <code>strap</code> package (Bell &amp; Lloyd 2014) is well-known and widely used. It plots a time tree against a nice colorful timescale (the colors are the official color codes of the Commission for the Geological Map of the World), and includes other niceties inherited from <code>plot.phylo()</code>, such as automatically stripping tip names of underscores and printing them in italics. One of the cool options we have at our disposal with <code>geoscalePhylo()</code> is to visualize the uncertainty in the ages of not just the internal nodes (we do that further down below), but also the tips. We can do that using an age range table like the one below:</p>
+<p><strong>Note:</strong> As pointed out on Facebook by David Bapst, the <code>ages</code> argument of <code>geoscalePhylo()</code> serves primarily for visualizing taxon durations in the fossil record; i.e., the time intervals between the first and last appearance. If a taxon is only known from a single stratigraphically unique occurrence, its first and last appearance will coincide; however, the age uncertainty associated with that occurrence can still be usefully represented using a range. This is what we’re doing below.</p>
 <pre class="r"><code>age_table &lt;- read.table(&quot;~/age_ranges.txt&quot;, stringsAsFactors = F)
 head(age_table)</code></pre>
 <pre><code>##                              V1    V2    V3
@@ -601,7 +601,10 @@ head(age_table)</code></pre>
 ## 5       Archaeoceratops_oshimai 113.0 129.4
 ## 6        Auroraceratops_rugosus 100.5 129.4</code></pre>
 <p>We need to reshuffle our age range table a bit, since <code>geoscalePhylo()</code> needs a matrix whose first and last appearance dates are in the right order, and which has exactly the right column and row names:</p>
-<pre class="r"><code>if(!require(&quot;phytools&quot;)) {install.packages(&quot;phytools&quot;)}
+<pre class="r"><code>if(!require(&quot;phytools&quot;)) {
+  install.packages(&quot;remotes&quot;)
+  remotes::install_github(&quot;fmichonneau/phyloch&quot;)
+}
 if(!require(&quot;strap&quot;)) {install.packages(&quot;strap&quot;)}
 library(phytools)
 library(strap)
