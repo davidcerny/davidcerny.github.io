@@ -35,10 +35,7 @@ head(age_table)&lt;/code&gt;&lt;/pre&gt;
 ## 5       Archaeoceratops_oshimai 113.0 129.4
 ## 6        Auroraceratops_rugosus 100.5 129.4&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We need to reshuffle our age range table a bit, since &lt;code&gt;geoscalePhylo()&lt;/code&gt; needs a matrix whose first and last appearance dates are in the right order, and which has exactly the right column and row names:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if(!require(&amp;quot;phytools&amp;quot;)) {
-  install.packages(&amp;quot;remotes&amp;quot;)
-  remotes::install_github(&amp;quot;fmichonneau/phyloch&amp;quot;)
-}
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if(!require(&amp;quot;phytools&amp;quot;)) {install.packages(&amp;quot;phytools&amp;quot;)}
 if(!require(&amp;quot;strap&amp;quot;)) {install.packages(&amp;quot;strap&amp;quot;)}
 library(phytools)
 library(strap)
@@ -91,7 +88,10 @@ geoscalePhylo(ladderize(tree, right = F), ages = my_ages, x.lim = c(0, 240), cex
 &lt;h2&gt;Adding HPDs: &lt;code&gt;phyloch&lt;/code&gt; and weird loops&lt;/h2&gt;
 &lt;p&gt;The next thing we’d like to do than can’t be easily done using any of the many available &lt;code&gt;geoscalePhylo&lt;/code&gt; arguments is to add 95% highest posterior density (HPD) intervals to the nodes of our tree.&lt;/p&gt;
 &lt;p&gt;The first step is to extract the necessary information from the annotated Nexus file produced by TreeAnnotator. There used to be several options for parsing such files; my favorite one was probably &lt;code&gt;read.annotated.nexus()&lt;/code&gt; from the &lt;code&gt;OutbreakTools&lt;/code&gt; library (Jombart et al. 2014), which unfortunately seems to have lately fallen victim to package dependency troubles. Nevertheless, the &lt;code&gt;read.beast()&lt;/code&gt; function from the &lt;code&gt;phyloch&lt;/code&gt; package (Heibl 2013) provides a great alternative. Note that we might want to define a new “annotation” (more accurately, add a new element to the list by which the tree is internally represented in R) that doesn’t care about how exactly we got our HPDs (from common ancestor heights? from median heights?) and that can be further manipulated:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if(!require(&amp;quot;phyloch&amp;quot;)) {install.packages(&amp;quot;phyloch&amp;quot;)}
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if(!require(&amp;quot;phyloch&amp;quot;)) {
+  install.packages(&amp;quot;remotes&amp;quot;)
+  remotes::install_github(&amp;quot;fmichonneau/phyloch&amp;quot;)
+}
 library(phyloch)
 
 annot_tree &amp;lt;- phyloch::read.beast(&amp;quot;~/my_MCC_tree.tre&amp;quot;)

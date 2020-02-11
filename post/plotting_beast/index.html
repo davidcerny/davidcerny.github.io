@@ -601,10 +601,7 @@ head(age_table)</code></pre>
 ## 5       Archaeoceratops_oshimai 113.0 129.4
 ## 6        Auroraceratops_rugosus 100.5 129.4</code></pre>
 <p>We need to reshuffle our age range table a bit, since <code>geoscalePhylo()</code> needs a matrix whose first and last appearance dates are in the right order, and which has exactly the right column and row names:</p>
-<pre class="r"><code>if(!require(&quot;phytools&quot;)) {
-  install.packages(&quot;remotes&quot;)
-  remotes::install_github(&quot;fmichonneau/phyloch&quot;)
-}
+<pre class="r"><code>if(!require(&quot;phytools&quot;)) {install.packages(&quot;phytools&quot;)}
 if(!require(&quot;strap&quot;)) {install.packages(&quot;strap&quot;)}
 library(phytools)
 library(strap)
@@ -657,7 +654,10 @@ geoscalePhylo(ladderize(tree, right = F), ages = my_ages, x.lim = c(0, 240), cex
 <h2>Adding HPDs: <code>phyloch</code> and weird loops</h2>
 <p>The next thing we’d like to do than can’t be easily done using any of the many available <code>geoscalePhylo</code> arguments is to add 95% highest posterior density (HPD) intervals to the nodes of our tree.</p>
 <p>The first step is to extract the necessary information from the annotated Nexus file produced by TreeAnnotator. There used to be several options for parsing such files; my favorite one was probably <code>read.annotated.nexus()</code> from the <code>OutbreakTools</code> library (Jombart et al. 2014), which unfortunately seems to have lately fallen victim to package dependency troubles. Nevertheless, the <code>read.beast()</code> function from the <code>phyloch</code> package (Heibl 2013) provides a great alternative. Note that we might want to define a new “annotation” (more accurately, add a new element to the list by which the tree is internally represented in R) that doesn’t care about how exactly we got our HPDs (from common ancestor heights? from median heights?) and that can be further manipulated:</p>
-<pre class="r"><code>if(!require(&quot;phyloch&quot;)) {install.packages(&quot;phyloch&quot;)}
+<pre class="r"><code>if(!require(&quot;phyloch&quot;)) {
+  install.packages(&quot;remotes&quot;)
+  remotes::install_github(&quot;fmichonneau/phyloch&quot;)
+}
 library(phyloch)
 
 annot_tree &lt;- phyloch::read.beast(&quot;~/my_MCC_tree.tre&quot;)
