@@ -5,7 +5,7 @@
     <link>/authors/</link>
       <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 28 Jan 2020 22:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 10 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Authors</title>
@@ -15,12 +15,28 @@
     <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Tue, 28 Jan 2020 22:00:00 +0000</pubDate>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/authors/admin/</guid>
-      <description>&lt;p&gt;I am interested in the development, evaluation, and application of phylogenetic methods, using Bayesian statistics as an overarching framework and fossil as well as extant vertebrates as my model system. My current research projects include testing the performance of existing methods for diversification rate estimation on extinct clades, and developing a fast and flexible Bayesian method for estimating dated supertrees.&lt;/p&gt;
+      <description>&lt;p&gt;I am interested in the development, evaluation, and application of phylogenetic methods, using Bayesian statistics as an overarching framework and fossil as well as extant vertebrates as my model system. My current research projects include exploring the sensitivity of node-dating analyses to the choice of calibrations and clock models, as well as developing a fast and flexible Bayesian method for estimating dated supertrees.&lt;/p&gt;
 
 &lt;p&gt;In 2018, I started my PhD in Geophysical Sciences at the &lt;a href=&#34;https://geosci.uchicago.edu/people/david-cerny/&#34; target=&#34;_blank&#34;&gt;University of Chicago&lt;/a&gt;, where I joined the &lt;a href=&#34;https://fourdimensionalbiology.com&#34; target=&#34;_blank&#34;&gt;Slater Lab&lt;/a&gt; to work on fossil vertebrate phylogenetics and macroevolution. My previous research experience includes paleontological and ecological fieldwork in Poland and French Polynesia, a bioinformatics internship in the &lt;a href=&#34;https://annualreport2017.crg.eu/scientific-report/bioinformatics-and-genomics/evolutionary-genomics/&#34; target=&#34;_blank&#34;&gt;Kondrashov Lab&lt;/a&gt; at the Centre de Regulació Genòmica in Barcelona, Spain, and undergraduate research in the &lt;a href=&#34;https://michaelalfaro.github.io/alfaro-lab/team/&#34; target=&#34;_blank&#34;&gt;Alfaro Lab&lt;/a&gt; at UCLA.&lt;/p&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>Daniel Madzia</title>
+      <link>/authors/daniel-madzia/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/authors/daniel-madzia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graham J. Slater</title>
+      <link>/authors/graham-j.-slater/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/authors/graham-j.-slater/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -84,22 +100,6 @@
       <link>/authors/thomas-j.-near/</link>
       <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
       <guid>/authors/thomas-j.-near/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Daniel Madzia</title>
-      <link>/authors/daniel-madzia/</link>
-      <pubDate>Sat, 22 Jun 2019 15:30:00 +0000</pubDate>
-      <guid>/authors/daniel-madzia/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Graham J. Slater</title>
-      <link>/authors/graham-j.-slater/</link>
-      <pubDate>Sat, 22 Jun 2019 15:30:00 +0000</pubDate>
-      <guid>/authors/graham-j.-slater/</guid>
       <description></description>
     </item>
     

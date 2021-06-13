@@ -5,12 +5,60 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 10 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Tags</title>
       <link>/tags/</link>
     </image>
+    
+    <item>
+      <title>BAMM</title>
+      <link>/tags/bamm/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/bamm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>diversification</title>
+      <link>/tags/diversification/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/diversification/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fossils</title>
+      <link>/tags/fossils/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/fossils/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>macroevolutionary rates</title>
+      <link>/tags/macroevolutionary-rates/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/macroevolutionary-rates/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ornithischia</title>
+      <link>/tags/ornithischia/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/ornithischia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PyRate</title>
+      <link>/tags/pyrate/</link>
+      <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/pyrate/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Divergence dating</title>
