@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fossil calibrations | David Černý</title>
+    <link>/tags/fossil-calibrations/</link>
+      <atom:link href="/tags/fossil-calibrations/index.xml" rel="self" type="application/rss+xml" />
+    <description>Fossil calibrations</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Fossil calibrations</title>
+      <link>/tags/fossil-calibrations/</link>
+    </image>
+    
+    <item>
+      <title>Comprehensive taxon sampling and vetted fossils help clarify the time tree of shorebirds (Aves, Charadriiformes)</title>
+      <link>/publication/cerny_et_natale_2022/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_natale_2022/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,12 +5,52 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 10 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Tags</title>
       <link>/tags/</link>
     </image>
+    
+    <item>
+      <title>Birds</title>
+      <link>/tags/birds/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/tags/birds/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Charadriiformes</title>
+      <link>/tags/charadriiformes/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/tags/charadriiformes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fossil calibrations</title>
+      <link>/tags/fossil-calibrations/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/tags/fossil-calibrations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Macroevolution</title>
+      <link>/tags/macroevolution/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/tags/macroevolution/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Phylogeny</title>
+      <link>/tags/phylogeny/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>/tags/phylogeny/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>BAMM</title>
