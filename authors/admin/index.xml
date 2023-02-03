@@ -5,12 +5,20 @@
     <link>/authors/admin/</link>
       <atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     <description>David Černý</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 09 Oct 2022 09:20:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 14 Jan 2023 17:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>David Černý</title>
       <link>/authors/admin/</link>
     </image>
+    
+    <item>
+      <title>Bayesian Least-Squares Supertrees (BLeSS): a flexible method for inferring large time-calibrated phylogenies</title>
+      <link>/poster/ssb_2023/</link>
+      <pubDate>Sat, 14 Jan 2023 17:00:00 +0000</pubDate>
+      <guid>/poster/ssb_2023/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Relative impact of character coding differences and stratigraphic information on the support for alternative early dinosaur phylogenies</title>

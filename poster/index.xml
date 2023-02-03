@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recent Posters | David Černý</title>
+    <link>/poster/</link>
+      <atom:link href="/poster/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent Posters</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 14 Jan 2023 17:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Recent Posters</title>
+      <link>/poster/</link>
+    </image>
+    
+    <item>
+      <title>Bayesian Least-Squares Supertrees (BLeSS): a flexible method for inferring large time-calibrated phylogenies</title>
+      <link>/poster/ssb_2023/</link>
+      <pubDate>Sat, 14 Jan 2023 17:00:00 +0000</pubDate>
+      <guid>/poster/ssb_2023/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
