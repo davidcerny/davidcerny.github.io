@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Esacus | David Černý</title>
+    <link>/tags/esacus/</link>
+      <atom:link href="/tags/esacus/index.xml" rel="self" type="application/rss+xml" />
+    <description>Esacus</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 May 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Esacus</title>
+      <link>/tags/esacus/</link>
+    </image>
+    
+    <item>
+      <title>A new genus-group name for _Burhinus bistriatus_ (Wagler, 1829) and _Burhinus superciliaris_ (Tschudi, 1843)</title>
+      <link>/publication/cerny_et_al_2023/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_al_2023/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

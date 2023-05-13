@@ -5,7 +5,7 @@
     <link>/authors/</link>
       <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 14 Jan 2023 17:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 May 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Authors</title>
@@ -15,7 +15,7 @@
     <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Sat, 14 Jan 2023 17:00:00 +0000</pubDate>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
       <guid>/authors/admin/</guid>
       <description>&lt;p&gt;I am interested in the development, evaluation, and application of phylogenetic methods, using Bayesian statistics as an overarching framework and fossil as well as extant vertebrates as my primary model system. My current research projects include the development of a fast and flexible Bayesian method for estimating time-scaled supertrees, and an empirical study assessing the ability of environment-dependent birth-death models to yield insights into the diversification of coevolving clades.&lt;/p&gt;
 
@@ -24,18 +24,34 @@
     </item>
     
     <item>
-      <title>Graham J. Slater</title>
-      <link>/authors/graham-j.-slater/</link>
-      <pubDate>Sat, 14 Jan 2023 17:00:00 +0000</pubDate>
-      <guid>/authors/graham-j.-slater/</guid>
+      <title>Paul van Els</title>
+      <link>/authors/paul-van-els/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/authors/paul-van-els/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rossy Natale</title>
       <link>/authors/rossy-natale/</link>
-      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
       <guid>/authors/rossy-natale/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Steven M. S. Gregory</title>
+      <link>/authors/steven-m.-s.-gregory/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/authors/steven-m.-s.-gregory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graham J. Slater</title>
+      <link>/authors/graham-j.-slater/</link>
+      <pubDate>Sat, 14 Jan 2023 17:00:00 +0000</pubDate>
+      <guid>/authors/graham-j.-slater/</guid>
       <description></description>
     </item>
     

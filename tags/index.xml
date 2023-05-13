@@ -5,12 +5,100 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 May 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Tags</title>
       <link>/tags/</link>
     </image>
+    
+    <item>
+      <title>_Burhinus_</title>
+      <link>/tags/_burhinus_/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/_burhinus_/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>_Esacus_</title>
+      <link>/tags/_esacus_/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/_esacus_/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>_Hesperoburhinus_ gen. nov.</title>
+      <link>/tags/_hesperoburhinus_-gen.-nov./</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/_hesperoburhinus_-gen.-nov./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Burhinidae</title>
+      <link>/tags/burhinidae/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/burhinidae/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Double-striped thick-knee</title>
+      <link>/tags/double-striped-thick-knee/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/double-striped-thick-knee/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Neotropics</title>
+      <link>/tags/neotropics/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/neotropics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>paraphyly</title>
+      <link>/tags/paraphyly/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/paraphyly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Peruvian thick-knee</title>
+      <link>/tags/peruvian-thick-knee/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/peruvian-thick-knee/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Phylogeny</title>
+      <link>/tags/phylogeny/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/phylogeny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>taxonomy</title>
+      <link>/tags/taxonomy/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/taxonomy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Thick-knees</title>
+      <link>/tags/thick-knees/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/thick-knees/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Birds</title>
@@ -41,14 +129,6 @@
       <link>/tags/macroevolution/</link>
       <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
       <guid>/tags/macroevolution/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Phylogeny</title>
-      <link>/tags/phylogeny/</link>
-      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>/tags/phylogeny/</guid>
       <description></description>
     </item>
     

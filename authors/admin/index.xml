@@ -5,12 +5,20 @@
     <link>/authors/admin/</link>
       <atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     <description>David Černý</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 14 Jan 2023 17:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 May 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>David Černý</title>
       <link>/authors/admin/</link>
     </image>
+    
+    <item>
+      <title>A new genus-group name for _Burhinus bistriatus_ (Wagler, 1829) and _Burhinus superciliaris_ (Tschudi, 1843)</title>
+      <link>/publication/cerny_et_al_2023/</link>
+      <pubDate>Fri, 12 May 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_al_2023/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Bayesian Least-Squares Supertrees (BLeSS): a flexible method for inferring large time-calibrated phylogenies</title>
