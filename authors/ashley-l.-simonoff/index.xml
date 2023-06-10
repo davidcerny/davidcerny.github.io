@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ashley L. Simonoff | David Černý</title>
+    <link>/authors/ashley-l.-simonoff/</link>
+      <atom:link href="/authors/ashley-l.-simonoff/index.xml" rel="self" type="application/rss+xml" />
+    <description>Ashley L. Simonoff</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 07 Jun 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Ashley L. Simonoff</title>
+      <link>/authors/ashley-l.-simonoff/</link>
+    </image>
+    
+    <item>
+      <title>Statistical evaluation of character support reveals the instability of higher-level dinosaur phylogeny</title>
+      <link>/publication/cerny_et_simonoff_2023/</link>
+      <pubDate>Wed, 07 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/cerny_et_simonoff_2023/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
