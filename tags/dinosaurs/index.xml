@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dinosaurs | David Černý</title>
+    <link>/tags/dinosaurs/</link>
+      <atom:link href="/tags/dinosaurs/index.xml" rel="self" type="application/rss+xml" />
+    <description>Dinosaurs</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 May 2024 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Dinosaurs</title>
+      <link>/tags/dinosaurs/</link>
+    </image>
+    
+    <item>
+      <title>A new abelisaurid dinosaur from the end Cretaceous of Patagonia and evolutionary rates among the Ceratosauria</title>
+      <link>/publication/pol_et_al_2024/</link>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <guid>/publication/pol_et_al_2024/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
