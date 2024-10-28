@@ -1264,7 +1264,7 @@ MULTI5_MK+ASC_LEWIS, fivestate = 66, 142, 227, 361
 
 <li><p><strong>RevBayes</strong>: Partitioning by state number is not automatic, but easy to implement, and we don&rsquo;t have to know the indices of individual characters with a given number of states in advance. The only thing we need is the maximum number of states observed in the dataset (denoted <code>max_state_num</code> in the code below), which we can usually extract from the Nexus file anyway:</p>
 
-<pre><code class="language-cpp">idx = 1
+<pre><code class="language-r">idx = 1
 max_state_num = 5
 
 # Start iterating from 2 since we assume there are no 1-state (constant) characters
@@ -1300,7 +1300,7 @@ for (i in 2:max_state_num) {
 
 <p>But wait! I still haven&rsquo;t mentioned IQ-TREE, the software I decided to use for the maximum-likelihood lab. Well, IQ-TREE is worse in this regard than RAxML-NG, which is already less than ideal. The basic idea is the same, but subject to the further constraint that we can&rsquo;t even mix binary and multistate characters in the same file. Therefore, if we try to translate our RAxML-NG partition file into a format recognizable by IQ-TREE:</p>
 
-<pre><code>#nexus
+<pre><code class="language-sh">#nexus
 begin sets;
     charset binary = 1 3-11 13-22 24-30 32-34 37 38 40-45 47-51 53-57 59-62 64 65 67-75 77-87 89-91 93-112 114-122 126-131 133 135-141 143-149 152-162 164 165 167-192 194 195 197-200 202 206-214 216-221 223-225 228-237 239-242 244-246 248-252 254-267 269-273 275 276 278-291 293-295 297-301 303-305 307-310 312-319 321-327 329-330 332-342 345-346 348-352 354 356-360 362-365 367-374 376-381;
     charset threestate = 2 12 35 36 39 46 52 58 63 76 88 92 113 125 151 163 166 201 203-205 222 226 243 247 253 277 302 306 331 343 344 353 366 375;
@@ -1316,7 +1316,7 @@ end;
 
 <p>we get the following error:</p>
 
-<pre><code>Alignment most likely contains binary sequences
+<pre><code class="language-sh">Alignment most likely contains binary sequences
 ERROR: Sequence &lt;taxon0&gt; has invalid character 2 at site 2
 ERROR: Sequence &lt;taxon1&gt; has invalid character 2 at site 2
 ERROR: Sequence &lt;taxon2&gt; has invalid character 2 at site 2
@@ -1326,7 +1326,7 @@ ERROR: ...many more...
 
 <p>The only thing that can save us here is the fact that IQ-TREE also allows individual partitions to come from separate files. This means we have to break up our character matrix into multiple files, each of which contains only those characters that share the same number of observed states:</p>
 
-<pre><code>#nexus
+<pre><code class="language-sh">#nexus
 begin sets;
     charset binary = MK2.phy;
     charset threestate = MK3.phy;
@@ -1342,7 +1342,7 @@ end;
 
 <p>And again, this is all ignoring the fact that in practice, we will likely be dealing with a mix of ordered and unordered characters. So we have to split the dataset by character type first, and by state number second, to end up with something like this:</p>
 
-<pre><code>#nexus
+<pre><code class="language-sh">#nexus
 begin sets;
     charset part1 = MK2.phy;
     charset part2 = MK3.phy;
