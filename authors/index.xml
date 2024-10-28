@@ -5,7 +5,7 @@
     <link>/authors/</link>
       <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 May 2024 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Oct 2024 22:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Authors</title>
@@ -15,7 +15,7 @@
     <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Oct 2024 22:00:00 +0000</pubDate>
       <guid>/authors/admin/</guid>
       <description>&lt;p&gt;I am interested in the development, evaluation, and application of phylogenetic methods, using Bayesian statistics as an overarching framework and fossil as well as extant vertebrates as my primary model system. My current research projects include the development of a fast and flexible Bayesian method for estimating time-scaled supertrees, and an empirical study assessing the ability of environment-dependent birth-death models to yield insights into the diversification of coevolving clades.&lt;/p&gt;
 

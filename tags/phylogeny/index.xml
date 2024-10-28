@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>phylogeny | David Černý</title>
+    <title>Phylogeny | David Černý</title>
     <link>/tags/phylogeny/</link>
       <atom:link href="/tags/phylogeny/index.xml" rel="self" type="application/rss+xml" />
-    <description>phylogeny</description>
+    <description>Phylogeny</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 May 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
-      <title>phylogeny</title>
+      <title>Phylogeny</title>
       <link>/tags/phylogeny/</link>
     </image>
     

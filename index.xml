@@ -5,12 +5,783 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>David Černý</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 May 2024 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Oct 2024 22:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>David Černý</title>
       <link>/</link>
     </image>
+    
+    <item>
+      <title>Teaching RevBayes: reflections and materials</title>
+      <link>/post/teaching_revbayes/</link>
+      <pubDate>Sat, 05 Oct 2024 22:00:00 +0000</pubDate>
+      <guid>/post/teaching_revbayes/</guid>
+      <description>
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In the fall of 2022, I got to TA a course called &lt;a href=&#34;http://graduateannouncements.uchicago.edu/graduate/departmentofthegeophysicalsciences/departmentofthegeophysicalsciences.pdf&#34; target=&#34;_blank&#34;&gt;&lt;em&gt;Phylogenetics and the Fossil Record&lt;/em&gt;&lt;/a&gt;, taught by my PhD advisor, &lt;a href=&#34;https://geosci.uchicago.edu/people/graham-slater/&#34; target=&#34;_blank&#34;&gt;Graham Slater&lt;/a&gt;. Although I TA&amp;rsquo;ed almost every single quarter during my time at the University of Chicago, this particular experience was pretty unique, for a number of reasons. First, it was a mixed undergraduate/graduate course, whereas all the other courses I TA&amp;rsquo;ed were offered exclusively to undergrads, and often specifically to non-science majors. Second, it was the only course I ever TA&amp;rsquo;ed that was directly and specifically related to my own research interests. Third, and related to the previous point, my responsibilities went a little further than they usually would. I wasn&amp;rsquo;t just in charge of grading and leading discussion or problem-set sessions: I was responsible for running a weekly two-hour lab where the students would get some hands-on practice with the material they&amp;rsquo;d learned about in their lectures, and Graham gave me a lot of freedom when it came to deciding how these labs should be organized and crafting the relevant exercises. This freedom extended to the choice of the software to be used; more on that below. Despite Graham&amp;rsquo;s and my best efforts, we had to make some adjustments to the originally planned course schedule, so on a few occasions, I even ended up having to introduce foundational concepts in advance of the corresponding lectures, such as the theory behind MCMC.&lt;/p&gt;
+
+&lt;p&gt;In contrast to molecular phylogenetics, where there is little interest in individual characters (at the end of the day, a nucleotide is a nucleotide) and dataset assembly is typically automated to a much greater extent, morphological phylogenetics places a lot more emphasis on the process of creating the dataset by scoring features that exhibit informative variation.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:0&#34;&gt;&lt;a href=&#34;#fn:0&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; Therefore, the very first lab of the course was devoted precisely to this process, with a fun spin: Graham had students assemble their own character matrices for several different types of pasta, with orzo as the outgroup.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:The-idea-of-making-a-phylogeny-of-foodstuffs-seems-to-be-either-a-pedagogical-homoplasy-or-an-instance-of-horizontal-meme-transfer-see-another-example-by-Josh-Drew-here-https-labroides-wordpress-com-candy-phylogeny&#34;&gt;&lt;a href=&#34;#fn:The-idea-of-making-a-phylogeny-of-foodstuffs-seems-to-be-either-a-pedagogical-homoplasy-or-an-instance-of-horizontal-meme-transfer-see-another-example-by-Josh-Drew-here-https-labroides-wordpress-com-candy-phylogeny&#34;&gt;0&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;20221005_104141.jpg&#34; alt=&#34;&#34; /&gt;
+&lt;p style=&#34;text-align: center; color: darkgray;&#34;&gt;Not necessarily what you expect to find when preparing to teach a phylogenetics class.&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;This was a really cool way of showing the students how morphological phylogenetic datasets are assembled, and teaching them about the importance of character coding, with great discussions taking place in different breakout groups about whether a given character should be treated as discrete or continuous, ordered or unordered, etc. I felt a little more ambivalent about our decision to stick with the pasta toy example for the rest of the course: every time a new method was introduced, the corresponding homework assignment would have the students apply it to their own pasta dataset. This worked great for parsimony, where you can have a lot of fun with inferring synapomorphies for particular nodes (extreme elongation evolving in the last common ancestor of spaghetti and linguine, etc.), but it got a little too cutesy for its own good when we got to tip-dating, which involves quantities like fossil ages and extinction rates that have no reasonable interpretation unless you are dealing with things that actually die out at different points in time and leave behind remains, like biological species or languages. In this latter case, I found it easier to have the students analyze a real dataset. Graham picked the one from &lt;a href=&#34;https://bioone.org/journals/bulletin-of-the-american-museum-of-natural-history/volume-2009/issue-325/574.1/Phylogenetic-Systematics-of-the-North-American-Fossil-Caninae-Carnivora/10.1206/574.1.full&#34; target=&#34;_blank&#34;&gt;Tedford et al.&amp;rsquo;s (2009) analysis&lt;/a&gt; of North American canids for this purpose, which I also used as an example when demoing the different methods.&lt;/p&gt;
+
+&lt;p&gt;Before each lab, I would upload a PDF &amp;ldquo;handout&amp;rdquo; to Canvas for the students to read prior to our meeting, though this wasn&amp;rsquo;t essential, and remained mostly aspirational anyway. The handout would explain key concepts and show how to implement them in the program we were about to work with, and I would use it as a guide for our lab activity. Interspersed throughout the handout, there would be exercises that the students were supposed to complete on their own and turn in the following week &amp;ndash; usually, these would ask them to modify the provided code in some way, if only to run it on their own dataset. The idea behind explaining every line of code in detail was to allow the students to refer back to the handout as they were working their way through the exercises.&lt;/p&gt;
+
+&lt;h2 id=&#34;choice-of-software&#34;&gt;Choice of software&lt;/h2&gt;
+
+&lt;p&gt;As with many similar courses, we covered the three main contemporary methods for inferring phylogenies from discrete characters, i.e., parsimony, maximum likelihood, and Bayesian inference. Unlike the other two methods, maximum likelihood is seldom used in fossil phylogenetics, so one could perhaps feel justified in skipping it, but from a pedagogical standpoint, it represents a very convenient bridge between parsimony (given their shared goal of optimizing a particular criterion, accomplished in practice by heuristic searches of tree space) and Bayesian inference (given their shared reliance on the likelihood function). Back in 2020, when the course was TA&amp;rsquo;ed by my former colleague &lt;a href=&#34;https://x.com/AnnaLWisniewski&#34; target=&#34;_blank&#34;&gt;Anna Wisniewski&lt;/a&gt;, PAUP* was used for parsimony, RAxML for maximum likelihood, MrBayes for time-free Bayesian inference, and BEAST 2 for tip-dating. Two years later, some changes to this list were in order. RAxML was always &lt;a href=&#34;https://groups.google.com/g/raxml/c/Najo2Wjnciw/m/RFLyYNVEAgAJ&#34; target=&#34;_blank&#34;&gt;rather inflexible&lt;/a&gt; when dealing with morphological data, and by 2022, it had become legacy software &amp;ndash; no longer under active development, and replaced by RAxML-NG. The latter program has many features to commend it, and I&amp;rsquo;ve happily &lt;a href=&#34;https://davidcerny.github.io/publication/cerny_et_natale_2022/&#34; target=&#34;_blank&#34;&gt;used it myself for combined analyses of molecular and morphological data&lt;/a&gt;, but it unfortunately doesn&amp;rsquo;t implement a substitution model for ordered characters out of the box. (The old RAxML did implement it, but &lt;a href=&#34;https://groups.google.com/g/raxml/c/0EvcoldRAKI/m/qYn37P26BgAJ&#34; target=&#34;_blank&#34;&gt;incorrectly&lt;/a&gt;.) I&amp;rsquo;m sure this feature is only missed by a tiny percentage of RAxML-NG users, and you can apparently get around its absence by &lt;a href=&#34;https://groups.google.com/g/raxml/c/0EvcoldRAKI/m/qYn37P26BgAJ&#34; target=&#34;_blank&#34;&gt;manually specifying the appropriate instantaneous rate matrix yourself&lt;/a&gt;, which is the same way ordered characters had to be handled in BEAST 2 when I last used it (though in RAxML-NG, this &lt;a href=&#34;https://groups.google.com/g/raxml/c/0EvcoldRAKI/m/qL2gO_YHBwAJ&#34; target=&#34;_blank&#34;&gt;can apparently lead&lt;/a&gt; to some pesky underflow issues). However, when analyzing real-world morphological data, being able to treat some but not all multistate characters as ordered is kind of a big deal, so I designed the maximum-likelihood lab around IQ-TREE, which makes this easy (with one important caveat; see below) and which I already had experience applying to morphological data as part of the analyses that ended up published as &lt;a href=&#34;https://davidcerny.github.io/publication/cerny_et_simonoff_2023/&#34; target=&#34;_blank&#34;&gt;Černý &amp;amp; Simonoff (2023)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;With regard to Bayesian inference, it seemed like overkill to me to introduce a new program every week, especially since the learning curve tends to be quite steep for each one of them. MrBayes had two important advantages: it can do both time-free inference and tip-dating, and the analysis setup (by means of setting a limited number of predefined parameters either interactively or in a separate block at the end of one&amp;rsquo;s Nexus file) resembles PAUP* quite a bit, allowing the students to build on what they learned earlier in the course. However, like RAxML, MrBayes is legacy software, which is both a blessing and a curse. It means that it is perhaps less likely to crash with a cryptic error message than competing programs like BEAST 2 and RevBayes, which are under active development and which allow users to freely assemble their own models by mixing and matching a large number of building blocks. However, it also means that things that were once supposed to work no longer do: as I &lt;a href=&#34;https://github.com/NBISweden/MrBayes/issues/302&#34; target=&#34;_blank&#34;&gt;recently found out&lt;/a&gt;, MrBayes can&amp;rsquo;t be used together with the BEAGLE library on ARM64 processors, which was not a concern in 2012 when the last minor release (3.2) came out, but which is a concern now that Apple has switched to this architecture for its laptops and desktops. Most importantly, it simply means that the program will be less and less useful going forward, as users increasingly abandon it for exciting new models and features implemented elsewhere.&lt;/p&gt;
+
+&lt;p&gt;In contrast, BEAST is a mature piece of software which is nevertheless still under active development, and which even comes with a GUI called BEAUti that should, in theory, make it much easier to use than the alternatives. Unfortunately, by design, BEAST only infers time trees, so it doesn&amp;rsquo;t support the full range of use cases we wanted to cover in the course. Moreover, my personal impression is that the GUI doesn&amp;rsquo;t quite live up to its promise. In my own BEAST 2 tip-dating analyses, I always found it necessary to go back to the XML that BEAUti generated for me and edit it manually (e.g., to treat certain characters as ordered, as mentioned above), which could be quite intimidating. A BEAST XML can be a beast of a file (easily reaching several megabytes in size when setting up total-evidence analyses that include molecular alignments), and it doesn&amp;rsquo;t clearly separate the data from the modeling choices (priors and parameters) and inference settings (sampler type, chain length, logging options, etc.). The BEAST 2 development team seems to be well aware of these problems, as shown by their recent proposal for a high-level model specification language called LinguaPhylo (&lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011226&#34; target=&#34;_blank&#34;&gt;Drummond et al. 2023&lt;/a&gt;), and by a &lt;a href=&#34;https://x.com/alexeidrummond/status/1837180395357622278&#34; target=&#34;_blank&#34;&gt;recently circulated survey&lt;/a&gt; raising the prospect of a backward-incompatible &amp;ldquo;BEAST 3&amp;rdquo; that entirely abandons the XML format in favor of such a language. Of note here is the fact &lt;a href=&#34;https://linguaphylo.github.io&#34; target=&#34;_blank&#34;&gt;LinguaPhylo&lt;/a&gt; is markedly similar to Rev, the model specification language used by RevBayes, so for now, the simplest solution is perhaps to use the latter program.&lt;/p&gt;
+
+&lt;p&gt;Indeed, in the fall of 2022, RevBayes seemed like the logical choice for the course Graham and I wanted to teach. Unlike BEAST, RevBayes can handle time-free inference as well as tip-dating, and unlike MrBayes, it is under active, community-driven development. It also helped that by the time I was asked to TA &lt;em&gt;Phylogenetics and the Fossil Record&lt;/em&gt;, I&amp;rsquo;d already had some &amp;ndash; though still quite rudimentary &amp;ndash; experience as a RevBayes developer: I had implemented a new supertree method in it for chapter 1 of my dissertation, and was slowly becoming familiar enough with the code base to start contributing bug fixes. What sealed the deal was the fact that after covering tree estimation in detail, we planned to dedicate the last lab of the course to things one can do with trees, such as trait evolution and/or biogeography. Unlike MrBayes and BEAST, which are narrowly focused on phylogenetic inference and would require us to switch to yet another piece of software (perhaps R packages such as &lt;code&gt;geiger&lt;/code&gt; or &lt;code&gt;BioGeoBEARS&lt;/code&gt;) for this one last lab, RevBayes tries to be a one-stop shop for everything phylogenetic, and provides a framework that is general enough to make such analyses possible. The undoubtedly not-so-easy effort of learning how to use RevBayes would pay off, because once the program was introduced, the students could just keep using it for everything we were about to throw at them.&lt;/p&gt;
+
+&lt;p&gt;Or at least, that was the idea; the final lab never actually took place. In part, that was because I realized (more on that below) that I had to dedicate an entire lab to introducing the basics of how RevBayes works, before getting around to using it for tree inference. I can see how this might seem ironic, and as an admission that RevBayes was more trouble than it&amp;rsquo;s worth in the end. However, I don&amp;rsquo;t feel too bad about it: we were already falling behind the schedule in general, including with the lectures, so it&amp;rsquo;s not like the extra lab held up the whole course and made it impossible to cover material that would have been covered otherwise.&lt;/p&gt;
+
+&lt;h2 id=&#34;teaching-revbayes&#34;&gt;Teaching RevBayes&lt;/h2&gt;
+
+&lt;p&gt;Once the decision was made to go with RevBayes for the Bayesian labs, my initial plan was to start with &lt;a href=&#34;http://phyloworks.org/people.html&#34; target=&#34;_blank&#34;&gt;Tracy Heath&lt;/a&gt;&amp;rsquo;s &lt;a href=&#34;https://revbayes.github.io/tutorials/mcmc/archery.html&#34; target=&#34;_blank&#34;&gt;archery tutorial&lt;/a&gt;, which had constituted &lt;a href=&#34;https://revbayes.github.io/workshops/fieldmuseum2018.html&#34; target=&#34;_blank&#34;&gt;my own introduction to RevBayes&lt;/a&gt; back in the halcyon days of October 2018. Fortunately, I had the good sense to ask for recommendations in the RevBayes developer Slack, and immediately received excellent advice, tips, and suggestions from &lt;a href=&#34;https://phyleauxlab.github.io/jeremy.html&#34; target=&#34;_blank&#34;&gt;Jeremy Brown&lt;/a&gt;, &lt;a href=&#34;https://scholar.google.com/citations?user=QSzya2UAAAAJ&#34; target=&#34;_blank&#34;&gt;Jiansi Gao&lt;/a&gt;, &lt;a href=&#34;https://www.eeob.iastate.edu/people/bruno-do-rosario-petrucci&#34; target=&#34;_blank&#34;&gt;Bruno Petrucci&lt;/a&gt;, &lt;a href=&#34;https://oschwery.github.io&#34; target=&#34;_blank&#34;&gt;Orlando Schwery&lt;/a&gt;, &lt;a href=&#34;https://tribblelab.org/team/#Carrie+M.+Tribble%2C+PhD&#34; target=&#34;_blank&#34;&gt;Carrie Tribble&lt;/a&gt;, &lt;a href=&#34;https://palaeobiology.nat.fau.de/people/instructors/warnock/&#34; target=&#34;_blank&#34;&gt;Rachel Warnock&lt;/a&gt;, and &lt;a href=&#34;https://wright-lab.com/the-wright-lab/&#34; target=&#34;_blank&#34;&gt;April Wright&lt;/a&gt; &amp;ndash; it really drove home the value of using software that has a lively, engaged developer community behind it. A number of people kindly shared their own lecture and workshop slides with me, many of which I shamelessly copied (with acknowledgments, of course &amp;ndash; see the blue text in the handouts below). Even more importantly, I was able to rely on the experience of people who had taught RevBayes to undergrads and grad students before, and prepare myself for those aspects of the process that were most likely to pose difficulties. One piece of feedback that pretty much everyone agreed on was that the archery tutorial was still a little too advanced to serve as a general introduction to RevBayes, and that my original idea of trying to keep things simple by not going into the distinction between constant, deterministic, and stochastic variables (as well as their respective assignment operators, &lt;code&gt;&amp;lt;-&lt;/code&gt;, &lt;code&gt;:=&lt;/code&gt;, and &lt;code&gt;~&lt;/code&gt;) was misguided. On the contrary, the best way forward was to spend as much time as necessary on these seeming details to make sure that the students were comfortable both with the underlying concepts from probability theory, and with representing them using the Rev syntax. In fact, the best approach would be to teach Rev much as one would any other programming language, introducing the key pieces of syntax one by one. It was for this reason that I decided to alter the original lab schedule and spend one entire meeting introducing Rev as gently as I possibly could, giving rise to Lab 6:&lt;/p&gt;
+
+&lt;div class=&#34;embed-pdf-container&#34; id=&#34;embed-pdf-container-a1f56680&#34;&gt;
+    &lt;div class=&#34;pdf-loadingWrapper&#34; id=&#34;pdf-loadingWrapper-a1f56680&#34;&gt;
+        &lt;div class=&#34;pdf-loading&#34; id=&#34;pdf-loading-a1f56680&#34;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;overlayText&#34;&gt;
+      &lt;a href=&#34;Lab6.pdf&#34; aria-label=&#34;Download&#34; download&gt;
+        &lt;svg aria-hidden=&#34;true&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 18 18&#34;&gt;
+            &lt;path d=&#34;M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z&#34; /&gt;
+        &lt;/svg&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;canvas class=&#34;pdf-canvas&#34; id=&#34;pdf-canvas-a1f56680&#34;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;pdf-paginator&#34; id=&#34;pdf-paginator-a1f56680&#34;&gt;
+    &lt;button id=&#34;pdf-prev-a1f56680&#34;&gt;Previous&lt;/button&gt;
+    &lt;button id=&#34;pdf-next-a1f56680&#34;&gt;Next&lt;/button&gt; &amp;nbsp; &amp;nbsp;
+    &lt;span&gt;
+      &lt;span class=&#34;pdf-pagenum&#34; id=&#34;pdf-pagenum-a1f56680&#34;&gt;&lt;/span&gt; / &lt;span class=&#34;pdf-pagecount&#34; id=&#34;pdf-pagecount-a1f56680&#34;&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-a1f56680&#34; href=&#34;Lab6.pdf&#34;&gt;[pdf]&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;noscript&gt;
+View the PDF file &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-noscript-a1f56680&#34; href=&#34;Lab6.pdf&#34;&gt;here&lt;/a&gt;.
+&lt;/noscript&gt;
+
+&lt;script type=&#34;text/javascript&#34;&gt;
+    (function(){
+    var url = &#39;Lab6.pdf&#39;;
+
+    var hidePaginator = &#34;&#34; === &#34;true&#34;;
+    var hideLoader = &#34;&#34; === &#34;true&#34;;
+    var selectedPageNum = parseInt(&#34;&#34;) || 1;
+
+    
+    var pdfjsLib = window[&#39;pdfjs-dist/build/pdf&#39;];
+
+    
+    if (pdfjsLib.GlobalWorkerOptions.workerSrc == &#39;&#39;)
+      pdfjsLib.GlobalWorkerOptions.workerSrc = &#34;\/&#34; + &#39;js/pdf-js/build/pdf.worker.js&#39;;
+
+    
+    var pdfDoc = null,
+        pageNum = selectedPageNum,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 3,
+        canvas = document.getElementById(&#39;pdf-canvas-a1f56680&#39;),
+        ctx = canvas.getContext(&#39;2d&#39;),
+        paginator = document.getElementById(&#34;pdf-paginator-a1f56680&#34;),
+        loadingWrapper = document.getElementById(&#39;pdf-loadingWrapper-a1f56680&#39;);
+
+
+    
+    showPaginator();
+    showLoader();
+
+    
+
+    function renderPage(num) {
+      pageRendering = true;
+      
+      pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: scale});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+
+        
+        renderTask.promise.then(function() {
+          pageRendering = false;
+          showContent();
+
+          if (pageNumPending !== null) {
+            
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      
+      document.getElementById(&#39;pdf-pagenum-a1f56680&#39;).textContent = num;
+    }
+
+    
+
+    function showContent() {
+      loadingWrapper.style.display = &#39;none&#39;;
+      canvas.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function showLoader() {
+      if(hideLoader) return
+      loadingWrapper.style.display = &#39;flex&#39;;
+      canvas.style.display = &#39;none&#39;;
+    }
+
+    
+
+    function showPaginator() {
+      if(hidePaginator) return
+      paginator.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    
+
+    function onPrevPage() {
+      if (pageNum &lt;= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-prev-a1f56680&#39;).addEventListener(&#39;click&#39;, onPrevPage);
+
+    
+
+    function onNextPage() {
+      if (pageNum &gt;= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-next-a1f56680&#39;).addEventListener(&#39;click&#39;, onNextPage);
+
+    
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      var numPages = pdfDoc.numPages;
+      document.getElementById(&#39;pdf-pagecount-a1f56680&#39;).textContent = numPages;
+
+      
+      if(pageNum &gt; numPages) {
+        pageNum = numPages
+      }
+
+      
+      renderPage(pageNum);
+    });
+    })();
+&lt;/script&gt;
+
+
+&lt;p&gt;Some observations on the handout above:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;One reason why I wasn&amp;rsquo;t too unhappy with the decision to start out slow and spend some extra time on the basics was that it allowed me to tie the lab back to Graham&amp;rsquo;s first lecture on maximum likelihood, which had also introduced the concept using coin flipping / Bernoulli trials. I liked the idea of our maximum likelihood and Bayesian inference intros mirroring each other.&lt;/li&gt;
+&lt;li&gt;That said, this decision also meant that I had the students run their first MCMC analysis before the topic was covered in the lectures, and before explaining the Metropolis-Hastings algorithm in detail by implementing it step by step. From a pedagogical standpoint, this may have been less than ideal.&lt;/li&gt;
+&lt;li&gt;One complication that I &lt;em&gt;didn&amp;rsquo;t&lt;/em&gt; have to deal with (unlike some of the other developers whose advice I had sought) was prefacing my introduction to Rev with an overview of general computing concepts such as using the command line, specifying directory paths, or the differences between Unix and Windows. This was not because everyone had already had a firm grasp on these by the time they enrolled in the course; it&amp;rsquo;s just that we&amp;rsquo;d run into these difficulties earlier, when introducing other software, and at this point I was able to take it for granted that the students were already familiar with them.&lt;/li&gt;
+&lt;li&gt;On a related note, I was a little worried about running RevBayes on Windows, which I knew had caused a lot of trouble at some past workshops. Fortunately, thanks to a series of PRs by &lt;a href=&#34;https://ben-redelings.org&#34; target=&#34;_blank&#34;&gt;Ben Redelings&lt;/a&gt;, this had pretty much ceased to be an issue by the time I asked the students to download the appropriate executables.&lt;/li&gt;
+&lt;li&gt;In the handout, I emphasize the similarities between Rev and R, since I expected the students to be familiar with the latter &amp;ndash; most likely, from their previous classes, or at the very least, from our own use of it earlier in the course. If I were to teach the course again, I would probably also point out some commonalities between Rev and Python: e.g., the distinction between functions (&lt;code&gt;func(obj)&lt;/code&gt;) and methods (&lt;code&gt;obj.method()&lt;/code&gt;), or the syntax for string concatenation (&lt;code&gt;dir = basedir + &amp;quot;RevBayes/Is/Awesome&amp;quot;&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following week, it was time to introduce time-free Bayesian phylogenetic inference, but I still wanted to go over the archery tutorial first to make sure everyone understood exactly how the Metropolis-Hastings algorithm worked. This resulted in an extremely long handout, but I don&amp;rsquo;t actually remember the meeting in question feeling especially rushed; two hours were enough to cover both the archery portion and the phylogram inference portion of the lab. In any case, I hope the pedagogical benefits were worth having the handout run to 18 pages. When it comes to learning basic MCMC theory, there&amp;rsquo;s nothing quite like building a toy sampler yourself &amp;ndash; this is something that Graham impressed on me early on, since it was one of the first things he had me do as his grad student.&lt;/p&gt;
+
+&lt;div class=&#34;embed-pdf-container&#34; id=&#34;embed-pdf-container-4b477b42&#34;&gt;
+    &lt;div class=&#34;pdf-loadingWrapper&#34; id=&#34;pdf-loadingWrapper-4b477b42&#34;&gt;
+        &lt;div class=&#34;pdf-loading&#34; id=&#34;pdf-loading-4b477b42&#34;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;overlayText&#34;&gt;
+      &lt;a href=&#34;Lab7.pdf&#34; aria-label=&#34;Download&#34; download&gt;
+        &lt;svg aria-hidden=&#34;true&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 18 18&#34;&gt;
+            &lt;path d=&#34;M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z&#34; /&gt;
+        &lt;/svg&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;canvas class=&#34;pdf-canvas&#34; id=&#34;pdf-canvas-4b477b42&#34;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;pdf-paginator&#34; id=&#34;pdf-paginator-4b477b42&#34;&gt;
+    &lt;button id=&#34;pdf-prev-4b477b42&#34;&gt;Previous&lt;/button&gt;
+    &lt;button id=&#34;pdf-next-4b477b42&#34;&gt;Next&lt;/button&gt; &amp;nbsp; &amp;nbsp;
+    &lt;span&gt;
+      &lt;span class=&#34;pdf-pagenum&#34; id=&#34;pdf-pagenum-4b477b42&#34;&gt;&lt;/span&gt; / &lt;span class=&#34;pdf-pagecount&#34; id=&#34;pdf-pagecount-4b477b42&#34;&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-4b477b42&#34; href=&#34;Lab7.pdf&#34;&gt;[pdf]&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;noscript&gt;
+View the PDF file &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-noscript-4b477b42&#34; href=&#34;Lab7.pdf&#34;&gt;here&lt;/a&gt;.
+&lt;/noscript&gt;
+
+&lt;script type=&#34;text/javascript&#34;&gt;
+    (function(){
+    var url = &#39;Lab7.pdf&#39;;
+
+    var hidePaginator = &#34;&#34; === &#34;true&#34;;
+    var hideLoader = &#34;&#34; === &#34;true&#34;;
+    var selectedPageNum = parseInt(&#34;&#34;) || 1;
+
+    
+    var pdfjsLib = window[&#39;pdfjs-dist/build/pdf&#39;];
+
+    
+    if (pdfjsLib.GlobalWorkerOptions.workerSrc == &#39;&#39;)
+      pdfjsLib.GlobalWorkerOptions.workerSrc = &#34;\/&#34; + &#39;js/pdf-js/build/pdf.worker.js&#39;;
+
+    
+    var pdfDoc = null,
+        pageNum = selectedPageNum,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 3,
+        canvas = document.getElementById(&#39;pdf-canvas-4b477b42&#39;),
+        ctx = canvas.getContext(&#39;2d&#39;),
+        paginator = document.getElementById(&#34;pdf-paginator-4b477b42&#34;),
+        loadingWrapper = document.getElementById(&#39;pdf-loadingWrapper-4b477b42&#39;);
+
+
+    
+    showPaginator();
+    showLoader();
+
+    
+
+    function renderPage(num) {
+      pageRendering = true;
+      
+      pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: scale});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+
+        
+        renderTask.promise.then(function() {
+          pageRendering = false;
+          showContent();
+
+          if (pageNumPending !== null) {
+            
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      
+      document.getElementById(&#39;pdf-pagenum-4b477b42&#39;).textContent = num;
+    }
+
+    
+
+    function showContent() {
+      loadingWrapper.style.display = &#39;none&#39;;
+      canvas.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function showLoader() {
+      if(hideLoader) return
+      loadingWrapper.style.display = &#39;flex&#39;;
+      canvas.style.display = &#39;none&#39;;
+    }
+
+    
+
+    function showPaginator() {
+      if(hidePaginator) return
+      paginator.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    
+
+    function onPrevPage() {
+      if (pageNum &lt;= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-prev-4b477b42&#39;).addEventListener(&#39;click&#39;, onPrevPage);
+
+    
+
+    function onNextPage() {
+      if (pageNum &gt;= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-next-4b477b42&#39;).addEventListener(&#39;click&#39;, onNextPage);
+
+    
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      var numPages = pdfDoc.numPages;
+      document.getElementById(&#39;pdf-pagecount-4b477b42&#39;).textContent = numPages;
+
+      
+      if(pageNum &gt; numPages) {
+        pageNum = numPages
+      }
+
+      
+      renderPage(pageNum);
+    });
+    })();
+&lt;/script&gt;
+
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;This is not really a pedagogical consideration, but I just really like the archery tutorial, since it does a great job of demonstrating the incredible flexibility of RevBayes. Aside from a high-level language for specifying models, the other key thing that RevBayes provides to the user is an efficient MCMC sampler written in C++ that interfaces with these models and makes it possible to conduct inference under them. However, it turns out that we can reproduce this core functionality of the program in the model specification language itself&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; &amp;ndash; i.e., at the Rev level. The tutorial achieves this by exploiting a feature that is present in the language, but hasn&amp;rsquo;t seen much use in real-world RevBayes analyses: user-defined functions.&lt;/li&gt;
+&lt;li&gt;What&amp;rsquo;s cool / dangerous (delete as appropriate) about teaching material that is closely related to your research interests, and teaching it to grad students who may go on to use it in their own work, is that you get to impress your own pet peeves on them. An example here is my emphasis (see p. 17) on the fact that when we present a single tree from a Bayesian phylogenetic analysis, this tree is just a &lt;em&gt;summary&lt;/em&gt; of the result, and not the result itself. The actual result is the entire posterior sample. Too often, paleontologists will speak of, say, the MCC tree as &amp;ldquo;the Bayesian tree&amp;rdquo;, seemingly unaware that it is just one tree among many which were sampled by their analysis. In particularly egregious cases, they might even comment on the resolution of &amp;ldquo;the Bayesian tree&amp;rdquo; and compare it to that of &amp;ldquo;the parsimony tree&amp;rdquo;. This makes no sense, since we can make our summary as resolved or unresolved as we like, and apparent differences in resolution between methods stem simply from the fact that their results are traditionally summarized using different conventions (e.g., the strict consensus of all MPTs in parsimony vs. picking one particular tree in Bayesian inference).&lt;/li&gt;
+&lt;li&gt;When I said an active developer community was a huge benefit when it came to teaching, the converse is also true: using RevBayes in workshop or classroom settings benefits its continued development, since it helps uncover bugs that might otherwise go undetected. Case in point: Exercise 6 in the handout above. In RevBayes, elements of the branch length vector have to be of type &lt;code&gt;RealPos&lt;/code&gt;, but when we draw from &lt;code&gt;dnUniform&lt;/code&gt;, the resulting stochastic variable is inferred to be of the most restrictive type possible based on the bounds of the distribution. Therefore, drawing from &lt;code&gt;dnUniform(0, 0.5)&lt;/code&gt; does not produce a &lt;code&gt;RealPos&lt;/code&gt; but rather a &lt;code&gt;Probability&lt;/code&gt;, which is a subtype of &lt;code&gt;RealPos&lt;/code&gt; with the domain restricted to $[0, 1]$. I reported this as &lt;a href=&#34;https://github.com/revbayes/revbayes/issues/308&#34; target=&#34;_blank&#34;&gt;issue #308&lt;/a&gt; specifically because the students ran into it when trying to complete the exercise, and I regret to say that two years later, it is still unresolved.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; If I were to rewrite the handout, I&amp;rsquo;d just have the students experiment with a completely different prior &amp;ndash; e.g., &lt;code&gt;dnExponential(5)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Exercise 7, in which the students were supposed to unlink branch lengths across partitions, was a well-intentioned test of their ability to piece together various things they&amp;rsquo;d already learned about Rev, but proved to be far too difficult in practice. If I remember correctly, not a single student figured it out.&lt;/li&gt;
+&lt;li&gt;One figure that I regret not recreating for my handout is this beautiful illustration of the RevBayes move schedule, taken from an unpublished tutorial developed by &lt;a href=&#34;https://mikeryanmay.github.io&#34; target=&#34;_blank&#34;&gt;Mike May&lt;/a&gt; and Jiansi Gao:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;moveschedule.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The final lab of the course was dedicated to tip-dating under the fossilized birth-death (FBD) process, and I tried to build as much as possible on the previous two labs when writing the corresponding handout. I mostly did this by exploiting what Warnock &amp;amp; Wright (2020) called the tripartite model, in which the inference of time-calibrated phylogenies can be decomposed into three mutually independent submodels: the substitution model, which describes how characters change along the branches of the tree; the clock model, which describes how the rate of the substitution process varies across these branches; and the tree model, which jointly specifies the topology of the tree and its branch lengths. As stated in the handout, the switch from time-free inference to tip-dating involves replacing the tree model and adding the clock model, which made it possible to re-use a good amount of the code that I&amp;rsquo;d gone over the week before:&lt;/p&gt;
+
+&lt;div class=&#34;embed-pdf-container&#34; id=&#34;embed-pdf-container-1b53623d&#34;&gt;
+    &lt;div class=&#34;pdf-loadingWrapper&#34; id=&#34;pdf-loadingWrapper-1b53623d&#34;&gt;
+        &lt;div class=&#34;pdf-loading&#34; id=&#34;pdf-loading-1b53623d&#34;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;overlayText&#34;&gt;
+      &lt;a href=&#34;Lab8.pdf&#34; aria-label=&#34;Download&#34; download&gt;
+        &lt;svg aria-hidden=&#34;true&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 18 18&#34;&gt;
+            &lt;path d=&#34;M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z&#34; /&gt;
+        &lt;/svg&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;canvas class=&#34;pdf-canvas&#34; id=&#34;pdf-canvas-1b53623d&#34;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;pdf-paginator&#34; id=&#34;pdf-paginator-1b53623d&#34;&gt;
+    &lt;button id=&#34;pdf-prev-1b53623d&#34;&gt;Previous&lt;/button&gt;
+    &lt;button id=&#34;pdf-next-1b53623d&#34;&gt;Next&lt;/button&gt; &amp;nbsp; &amp;nbsp;
+    &lt;span&gt;
+      &lt;span class=&#34;pdf-pagenum&#34; id=&#34;pdf-pagenum-1b53623d&#34;&gt;&lt;/span&gt; / &lt;span class=&#34;pdf-pagecount&#34; id=&#34;pdf-pagecount-1b53623d&#34;&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-1b53623d&#34; href=&#34;Lab8.pdf&#34;&gt;[pdf]&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;noscript&gt;
+View the PDF file &lt;a class=&#34;pdf-source&#34; id=&#34;pdf-source-noscript-1b53623d&#34; href=&#34;Lab8.pdf&#34;&gt;here&lt;/a&gt;.
+&lt;/noscript&gt;
+
+&lt;script type=&#34;text/javascript&#34;&gt;
+    (function(){
+    var url = &#39;Lab8.pdf&#39;;
+
+    var hidePaginator = &#34;&#34; === &#34;true&#34;;
+    var hideLoader = &#34;&#34; === &#34;true&#34;;
+    var selectedPageNum = parseInt(&#34;&#34;) || 1;
+
+    
+    var pdfjsLib = window[&#39;pdfjs-dist/build/pdf&#39;];
+
+    
+    if (pdfjsLib.GlobalWorkerOptions.workerSrc == &#39;&#39;)
+      pdfjsLib.GlobalWorkerOptions.workerSrc = &#34;\/&#34; + &#39;js/pdf-js/build/pdf.worker.js&#39;;
+
+    
+    var pdfDoc = null,
+        pageNum = selectedPageNum,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 3,
+        canvas = document.getElementById(&#39;pdf-canvas-1b53623d&#39;),
+        ctx = canvas.getContext(&#39;2d&#39;),
+        paginator = document.getElementById(&#34;pdf-paginator-1b53623d&#34;),
+        loadingWrapper = document.getElementById(&#39;pdf-loadingWrapper-1b53623d&#39;);
+
+
+    
+    showPaginator();
+    showLoader();
+
+    
+
+    function renderPage(num) {
+      pageRendering = true;
+      
+      pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: scale});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+
+        
+        renderTask.promise.then(function() {
+          pageRendering = false;
+          showContent();
+
+          if (pageNumPending !== null) {
+            
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      
+      document.getElementById(&#39;pdf-pagenum-1b53623d&#39;).textContent = num;
+    }
+
+    
+
+    function showContent() {
+      loadingWrapper.style.display = &#39;none&#39;;
+      canvas.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function showLoader() {
+      if(hideLoader) return
+      loadingWrapper.style.display = &#39;flex&#39;;
+      canvas.style.display = &#39;none&#39;;
+    }
+
+    
+
+    function showPaginator() {
+      if(hidePaginator) return
+      paginator.style.display = &#39;block&#39;;
+    }
+
+    
+
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    
+
+    function onPrevPage() {
+      if (pageNum &lt;= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-prev-1b53623d&#39;).addEventListener(&#39;click&#39;, onPrevPage);
+
+    
+
+    function onNextPage() {
+      if (pageNum &gt;= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById(&#39;pdf-next-1b53623d&#39;).addEventListener(&#39;click&#39;, onNextPage);
+
+    
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      var numPages = pdfDoc.numPages;
+      document.getElementById(&#39;pdf-pagecount-1b53623d&#39;).textContent = numPages;
+
+      
+      if(pageNum &gt; numPages) {
+        pageNum = numPages
+      }
+
+      
+      renderPage(pageNum);
+    });
+    })();
+&lt;/script&gt;
+
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;On p. 7, I say that a good way to explore the parameter space of complex models is to specify the same type of move with different step sizes: e.g., &lt;code&gt;mvSlide&lt;/code&gt; with &lt;code&gt;delta=0.01&lt;/code&gt;, &lt;code&gt;delta=0.1&lt;/code&gt;, and &lt;code&gt;delta=1&lt;/code&gt;. That&amp;rsquo;s definitely one way to do it, but if I were to write the handout again, I would instead recommend using the slice move (&lt;code&gt;mvSlice&lt;/code&gt;), which automatically chooses its step sizes based on the shape of the likelihood function, so it can propose small steps in some regions of parameter space and large steps in others. As a result, the acceptance rate of the slice move is close to 1, which makes for very efficient exploration.&lt;/li&gt;
+&lt;li&gt;The code from the handout &lt;em&gt;will&lt;/em&gt; run with the most recent version of RevBayes (at the time of writing this post, v1.2.5-preview, commit &lt;a href=&#34;https://github.com/revbayes/revbayes/commit/85cbe87be6490887b840d463076335e8d7112cbe&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;85cbe87&lt;/code&gt;&lt;/a&gt;), but it will keep triggering the warning added in &lt;a href=&#34;https://github.com/revbayes/revbayes/pull/559&#34; target=&#34;_blank&#34;&gt;PR #559&lt;/a&gt;. This is because the analysis will often sample trees with a sampled ancestor at the root (i.e., trees in which a single taxon is ancestral to all others), and the &lt;code&gt;mvRootTimeSlideUniform&lt;/code&gt; move, which operates on the age of the root, will attempt to shift its age outside the bounds specified in the taxon file (see the discussion under &lt;a href=&#34;https://github.com/revbayes/revbayes/issues/544&#34; target=&#34;_blank&#34;&gt;issue #544&lt;/a&gt;). The simplest way to avoid this warning being printed to the screen several hundred thousand times is just to delete or comment out the offending move.&lt;/li&gt;
+&lt;li&gt;The code given in the handout implicitly fixes the age of each tip to the minimum specified in the taxon file. Obviously, in a real-world analysis, we&amp;rsquo;d like to sample the tip ages from their respective uncertainty ranges (&lt;a href=&#34;https://royalsocietypublishing.org/doi/10.1098/rspb.2019.0685&#34; target=&#34;_blank&#34;&gt;Barido-Sottani et al. 2019&lt;/a&gt;), or even use the FBD-range model (&lt;a href=&#34;https://www.sciencedirect.com/science/article/pii/S002251931830119X&#34; target=&#34;_blank&#34;&gt;Stadler et al. 2018&lt;/a&gt;) to account for the fact that taxa like &amp;ldquo;Hesperocyoninae&amp;rdquo; include multiple fossil occurrences of different ages. Unfortunately, the latter option is unworkable, because the current implementation of the FBD-range model in RevBayes &lt;a href=&#34;https://github.com/revbayes/revbayes/issues/451&#34; target=&#34;_blank&#34;&gt;yields the wrong likelihoods&lt;/a&gt;, and I decided not to opt for the former option mostly out of pedagogical laziness. &lt;a href=&#34;https://revbayes.github.io/tutorials/fbd/fbd_specimen.html#Exercise-FBD-TipSampling&#34; target=&#34;_blank&#34;&gt;The Rev code for sampling tip ages&lt;/a&gt; is quite opaque, and explaining the meaning of the auxiliary variable &lt;code&gt;F&lt;/code&gt; or of clamping it to 0 is not an easy task. See the &lt;a href=&#34;https://revbayes.github.io/tutorials/fbd/fbd_specimen.html#Intro-TipSampling&#34; target=&#34;_blank&#34;&gt;official FBD tutorial&lt;/a&gt; for our current best shot at it.&lt;/li&gt;
+&lt;li&gt;If the students try to plug their own numbers into the line of code that calculates the rate of the exponential prior on the age of origin, they might once again run afoul of the RevBayes type system. Let&amp;rsquo;s say we want to change the hard minimum and soft maximum from $38$ and $49$ to $318.1$ and $358.9$, respectively. Both of these values are of type &lt;code&gt;RealPos&lt;/code&gt;, but RevBayes quite reasonably cannot guarantee that the result of subtracting one nonnegative real number from another will also be nonnegative. Therefore, the type of $358.9 - 318.1$ is &lt;code&gt;Real&lt;/code&gt;, and the whole expression &lt;code&gt;(358.9 - 318.1)/qexp(0.95)&lt;/code&gt; evaluates to a &lt;code&gt;Real&lt;/code&gt; as well. But unfortunately, that means the reciprocal of the resulting value can no longer be used as the rate parameter of an exponential distribution, which has to be of type &lt;code&gt;RealPos&lt;/code&gt;. We can circumvent this problem by writing &lt;code&gt;abs(358.9 - 318.1)/qexp(0.95)&lt;/code&gt;, abusing the absolute value function as a type cast from &lt;code&gt;Real&lt;/code&gt; to &lt;code&gt;RealPos&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Another pet peeve I got to point out: in FBD analyses, outgroups are not only unnecessary but potentially detrimental. This is often underappreciated, because most paleontologists perceive Bayesian tip-dating just as an alternative method to be applied to their existing datasets, which were almost always compiled for use with parsimony &amp;ndash; a point that was recently made in another context by &lt;a href=&#34;https://www.biorxiv.org/content/10.1101/2024.06.26.600858v1&#34; target=&#34;_blank&#34;&gt;Wright &amp;amp; Wynd (2024)&lt;/a&gt;. Parsimony infers unrooted trees, and outgroups are needed to determine the position of the root after the fact. FBD analyses, on the other hand, infer rooted trees directly, without the need to resort to such a crutch. However, undersampled outgroups &amp;ndash; and outgroups are pretty much always undersampled relative to the ingroup &amp;ndash; violate key assumptions of the FBD model. I haven&amp;rsquo;t seen this pointed out much in the literature; one recent exception would be &lt;a href=&#34;https://link.springer.com/chapter/10.1007/978-3-030-60181-2_11&#34; target=&#34;_blank&#34;&gt;Gavryushkina &amp;amp; Zhang (2021)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Overall, I had a good time teaching RevBayes, and I&amp;rsquo;m happy to say that two years later, I still stand by my assessment that it was the right choice for this type of course. That doesn&amp;rsquo;t mean I think it would be the best choice for every course. Earlier this year, Diego Pol, with whom I had the pleasure to collaborate on the &lt;a href=&#34;https://davidcerny.github.io/publication/pol_et_al_2024/&#34; target=&#34;_blank&#34;&gt;description of &lt;em&gt;Koleken&lt;/em&gt;&lt;/a&gt;, asked me what software I&amp;rsquo;d recommend for Bayesian tip-dating if the goal was to design a lab for undergrads that was as simple and user-friendly as possible. Given those criteria, I had to recommend MrBayes over RevBayes. However, when there is enough time to spend on MCMC theory, probabilistic graphical models, and the Rev syntax, using RevBayes in a classroom setting can be a rewarding experience.&lt;/p&gt;
+
+&lt;h2 id=&#34;partitioning-by-state-number-a-rant&#34;&gt;Partitioning by state number: a rant&lt;/h2&gt;
+
+&lt;p&gt;My single biggest worry was that the students would come to dislike RevBayes for being too complicated and wonky. Surprisingly, that proved not to be the case, and I was repeatedly told that the RevBayes-based Bayesian labs were smooth sailing compared to the maximum-likelihood lab we&amp;rsquo;d done one week earlier. Was this because learning how to interpret probabilistic graphical models and code them up in a custom domain-specific programming language is actually pretty easy? Not necessarily, I&amp;rsquo;m afraid. It&amp;rsquo;s just that the maximum-likelihood lab turned out to be particularly frustrating for a reason that ultimately had to do with the highly technical problem of partitioning morphological datasets by the observed number of character states.&lt;/p&gt;
+
+&lt;p&gt;The notion that partitioning by state number is important in model-based analyses of discrete morphological data is, as far as I can tell, one of those ideas that just sort of float around in the community before someone finally takes it upon themselves to formally demonstrate it in print in a rigorous manner. Brief discussions of it could be found in the literature for some time. &lt;a href=&#34;https://academic.oup.com/sysbio/article/66/1/57/2670056&#34; target=&#34;_blank&#34;&gt;Gavryushkina et al. (2017)&lt;/a&gt; found that partitioning by state number improved model fit in terms of marginal likelihoods relative to an alternative treatment (default for most software; see below) where a single substitution model is applied to all characters, and the size of its instantaneous rate matrix $Q$ is determined by the maximum of the state numbers observed in the dataset. &lt;a href=&#34;https://academic.oup.com/sysbio/article/66/4/499/2633750&#34; target=&#34;_blank&#34;&gt;King et al. (2017)&lt;/a&gt; agreed that partitioning by the number of states was desirable but argued that the lower stationary frequencies for characters with higher state numbers need to be countered by increasing exchangeabilities in order to prevent changes in such characters from being artificially upweighted &amp;ndash; an argument I&amp;rsquo;m not sure I buy.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; More recently, &lt;a href=&#34;https://royalsocietypublishing.org/doi/full/10.1098/rspb.2024.1184&#34; target=&#34;_blank&#34;&gt;Ruebenstahl et al. (2024)&lt;/a&gt; discussed the issue in the &lt;a href=&#34;https://figshare.com/articles/journal_contribution/Dataset_S1_from_Convergent_evolution_of_giant_size_in_eurypterids/26394653?file=47991323&#34; target=&#34;_blank&#34;&gt;supplement&lt;/a&gt; of their paper on the evolution of sea scorpions. However, it was &lt;a href=&#34;https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syae033/7706112&#34; target=&#34;_blank&#34;&gt;Khakurel et al. (2024)&lt;/a&gt; who finally tackled the issue head-on, and performed a detailed simulation study showing that the use of a single $Q$-matrix which is too large for most characters in the matrix leads to systematic underestimation of branch lengths.&lt;/p&gt;
+
+&lt;p&gt;If we&amp;rsquo;ve established that partitioning by the number of states matters, how hard is it to implement this option in existing phylogenetic software? It turns out the answer ranges from &amp;ldquo;easy&amp;rdquo; to &amp;ldquo;impossible&amp;rdquo;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RAxML&lt;/strong&gt;: A single $Q$-matrix is applied to the whole dataset, and its size is automatically determined based on the highest-numbered state therein. Manual partitioning &lt;a href=&#34;https://groups.google.com/g/raxml/c/Pi-bfBchK4w/m/Th5-DePcBgAJ&#34; target=&#34;_blank&#34;&gt;might be an option&lt;/a&gt;, but since RAxML makes it impossible to treat some multistate characters as ordered and others as unordered, it&amp;rsquo;s just poorly suited to analyses of real-world morphological datasets in general.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RAxML-NG&lt;/strong&gt;: The default behavior is the same, but flexibility has increased. The partition file can now directly specify substitution models (not just data types), and instead of a single &lt;code&gt;MULTI&lt;/code&gt; data type, we get fine-grained control over the number of states $k$. In theory, this makes it possible to create partition files like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;BIN+G+ASC_LEWIS, binary = 1-322
+MULTI3_MK+G+ASC_LEWIS, threestate = 323-357
+MULTI4_MK+G+ASC_LEWIS, fourstate = 358-377
+MULTI5_MK+ASC_LEWIS, fivestate = 378-381
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Unfortunately, real-world morphological datasets are &lt;em&gt;never&lt;/em&gt; organized by the number of observed states, which means that we&amp;rsquo;re more likely to end up with this abomination:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;```
+BIN+G+ASC_LEWIS, binary = 1, 3-11, 13-22, 24-30, 32-34, 37, 38, 40-45, 47-51, 53-57, 59-62, 64, 65, 67-75, 77-87, 89-91, 93-112, 114-122, 126-131, 133, 135-141, 143-149, 152-162, 164, 165, 167-192, 194, 195, 197-200, 202, 206-214, 216-221, 223-225, 228-237, 239-242, 244-246, 248-252, 254-267, 269-273, 275, 276, 278-291, 293-295, 297-301, 303-305, 307-310, 312-319, 321-327, 329-330, 332-342, 345-346, 348-352, 354, 356-360, 362-365, 367-374, 376-381
+MULTI3_MK+G+ASC_LEWIS, threestate = 2, 12, 35, 36, 39, 46, 52, 58, 63, 76, 88, 92, 113, 125, 151, 163, 166, 201, 203-205, 222, 226, 243, 247, 253, 277, 302, 306, 331, 343, 344, 353, 366, 375
+MULTI4_MK+G+ASC_LEWIS, fourstate = 23, 31, 123, 124, 132, 134, 150, 193, 196, 215, 227, 238, 268, 274, 292, 296, 311, 320, 328, 347, 355
+MULTI5_MK+ASC_LEWIS, fivestate = 66, 142, 227, 361
+```
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;which, to add insult to injury, is non-trivial to produce, since we first need to write some sort of state-counting script.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;MrBayes&lt;/strong&gt;: The dataset is automatically partitioned by the number of observed states, so that each partition receives a $Q$-matrix of appropriate size, and the resulting partitions are implicit. This is extremely convenient for the user, but also rather limiting: it is impossible to unlink rate variation or clock models across such partitions, or to assign them different ascertainment bias corrections. The only way around this limitation is to once again specify the partitions manually.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RevBayes&lt;/strong&gt;: Partitioning by state number is not automatic, but easy to implement, and we don&amp;rsquo;t have to know the indices of individual characters with a given number of states in advance. The only thing we need is the maximum number of states observed in the dataset (denoted &lt;code&gt;max_state_num&lt;/code&gt; in the code below), which we can usually extract from the Nexus file anyway:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;idx = 1
+max_state_num = 5
+
+# Start iterating from 2 since we assume there are no 1-state (constant) characters
+for (i in 2:max_state_num) {
+    # Make a copy of the full character matrix (&#39;morpho&#39;)
+    chars[i - 1] &amp;lt;- morpho
+    # Only keep those characters whose state space size equals i
+    chars[i - 1].setNumStatesPartition(i)
+    # Get the number of characters with i states
+    nc = chars[i - 1].nchar()
+    # If this number is greater than zero, create the appropriate Q-matrix
+    if (nc &amp;gt; 0) {
+        print(&amp;quot;There are &amp;quot;+nc+&amp;quot; characters with &amp;quot;+i+&amp;quot; states.&amp;quot;)
+        Qmat[idx] &amp;lt;- fnJC(i)
+
+        # Draw from the phylogenetic continuous-time Markov chain
+        ctmc[idx] ~ dnPhyloCTMC(tree=tree, Q=Qmat[idx], branchRates=branch_rates,
+                                siteRates=char_rates, type=&amp;quot;Standard&amp;quot;,
+                                coding=&amp;quot;variable&amp;quot;)
+        # Clamp to the data
+        ctmc[idx].clamp( chars[i - 1] )
+        
+        # Increment counter
+        idx = idx + 1
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note that the resulting partitions are explicit &amp;ndash; if we wanted to, we could use the &lt;code&gt;idx&lt;/code&gt; index to give them unlinked rate variation or clock models, or different ascertainment bias corrections.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BEAST 2&lt;/strong&gt;: The dataset is automatically partitioned by the number of observed states, so that each partition receives a $Q$-matrix of appropriate size, and the resulting partitions are explicit, meaning that we can assign them different models if we so choose. Credit where credit is due &amp;ndash; this is the best behavior out of all phylogenetic programs I&amp;rsquo;ve used, hands down.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But wait! I still haven&amp;rsquo;t mentioned IQ-TREE, the software I decided to use for the maximum-likelihood lab. Well, IQ-TREE is worse in this regard than RAxML-NG, which is already less than ideal. The basic idea is the same, but subject to the further constraint that we can&amp;rsquo;t even mix binary and multistate characters in the same file. Therefore, if we try to translate our RAxML-NG partition file into a format recognizable by IQ-TREE:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#nexus
+begin sets;
+    charset binary = 1 3-11 13-22 24-30 32-34 37 38 40-45 47-51 53-57 59-62 64 65 67-75 77-87 89-91 93-112 114-122 126-131 133 135-141 143-149 152-162 164 165 167-192 194 195 197-200 202 206-214 216-221 223-225 228-237 239-242 244-246 248-252 254-267 269-273 275 276 278-291 293-295 297-301 303-305 307-310 312-319 321-327 329-330 332-342 345-346 348-352 354 356-360 362-365 367-374 376-381;
+    charset threestate = 2 12 35 36 39 46 52 58 63 76 88 92 113 125 151 163 166 201 203-205 222 226 243 247 253 277 302 306 331 343 344 353 366 375;
+    charset fourstate = 23 31 123 124 132 134 150 193 196 215 227 238 268 274 292 296 311 320 328 347 355;
+    charset fivestate = 66 142 227 361;
+    charpartition mine =
+      JC2+ASC+G: binary,
+      MK+ASC+G: threestate,
+      MK+ASC+G: fourstate,
+      MK+ASC: fivestate;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;we get the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Alignment most likely contains binary sequences
+ERROR: Sequence &amp;lt;taxon0&amp;gt; has invalid character 2 at site 2
+ERROR: Sequence &amp;lt;taxon1&amp;gt; has invalid character 2 at site 2
+ERROR: Sequence &amp;lt;taxon2&amp;gt; has invalid character 2 at site 2
+&amp;lt;...&amp;gt;
+ERROR: ...many more...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The only thing that can save us here is the fact that IQ-TREE also allows individual partitions to come from separate files. This means we have to break up our character matrix into multiple files, each of which contains only those characters that share the same number of observed states:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#nexus
+begin sets;
+    charset binary = MK2.phy;
+    charset threestate = MK3.phy;
+    charset fourstate = MK4.phy;
+    charset fivestate = MK5.phy;
+    charpartition mine =
+      JC2+ASC+G: binary,
+      MK+ASC+G: threestate,
+      MK+ASC+G: fourstate,
+      MK+ASC: fivestate,
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And again, this is all ignoring the fact that in practice, we will likely be dealing with a mix of ordered and unordered characters. So we have to split the dataset by character type first, and by state number second, to end up with something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#nexus
+begin sets;
+    charset part1 = MK2.phy;
+    charset part2 = MK3.phy;
+    charset part3 = MK4.phy;
+    charset part4 = MK5.phy;
+    charset part5 = ORDERED3.phy;
+    charset part6 = ORDERED4.phy;
+    charpartition mine =
+      JC2+ASC+G: part1,
+      MK+ASC+G: part2,
+      MK+ASC+G: part3,
+      MK+ASC: part4,
+      ORDERED+ASC+G: part5,
+      ORDERED+ASC: part6;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;My bright idea for how to keep the IQ-TREE exercise both manageable and theoretically rigorous was to provide the students with an R script that would take as its input a character matrix in Nexus format and a vector of indices of the characters to be ordered, and return partition-specific Phylip data files plus a Nexus partition file (similar to the one shown above) as its output. This way, the ugly preprocessing step would be taken care of, and the students could just focus on experimenting with different settings when executing the program from the command line.&lt;/p&gt;
+
+&lt;p&gt;The initial version of my script failed for pretty much everyone, and in a unique way in each and every case. I spent a whole week answering emails from students who were understandably anxious that the very first step of their analysis, and the prerequisite for everything else they were supposed to do in their assignment, was failing with error messages they had trouble deciphering. In a few cases, this turned out to be due to genuine mistakes in their Nexus files &amp;ndash; e.g., using illegal symbols in taxon names, or specifying the wrong &lt;code&gt;NCHAR&lt;/code&gt; value. More often, however, it turned out that my script made way stronger assumptions about what a matrix file should look like than the actual requirements specified by the &lt;a href=&#34;http://informatics.nescent.org/w/images/8/8b/NEXUS_Final.pdf&#34; target=&#34;_blank&#34;&gt;Nexus standard&lt;/a&gt;, and couldn&amp;rsquo;t deal with perfectly normal variation in things like leading tabs, blank lines after commands, or the delimiter used to separate the taxon names from their corresponding character state strings. Some of the problems I should have definitely foreseen (e.g., what if there are no ordered characters?), but others really were unexpected (one student had a matrix consisting of &lt;em&gt;only&lt;/em&gt; ordered characters). All in all, this definitely made me appreciate the Nexus parsers integrated in software like RevBayes and IQ-TREE, which effortlessly handle everything you throw at them. You can see the final outcome of my efforts to robustify the partitioning script &lt;a href=&#34;https://github.com/davidcerny/GEOS26100-Fall2022/blob/master/partition.R&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;, but needless to say, it is still pretty fragile: it relies on features that the Nexus standard explicitly says are optional, like the &lt;code&gt;NTAX&lt;/code&gt; command, and makes all sorts of implicit assumptions about the &lt;code&gt;MATRIX&lt;/code&gt; block.&lt;/p&gt;
+
+&lt;h2 id=&#34;software-discussed-in-this-post&#34;&gt;Software discussed in this post&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RevBayes&lt;/strong&gt;: Höhna et al. (2016). &lt;a href=&#34;https://github.com/revbayes/revbayes&#34; target=&#34;_blank&#34;&gt;https://github.com/revbayes/revbayes&lt;/a&gt;. GNU GPL-3.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RAxML-NG&lt;/strong&gt;: Kozlov et al. (2019). &lt;a href=&#34;https://github.com/amkozlov/raxml-ng&#34; target=&#34;_blank&#34;&gt;https://github.com/amkozlov/raxml-ng&lt;/a&gt;. GNU AGPL-3.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RAxML&lt;/strong&gt;: Stamatakis et al. (2004); Stamatakis (2014). &lt;a href=&#34;https://github.com/stamatak/standard-RAxML&#34; target=&#34;_blank&#34;&gt;https://github.com/stamatak/standard-RAxML&lt;/a&gt;. GNU GPL-3.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PAUP*&lt;/strong&gt;: Swofford (2002). &lt;a href=&#34;https://paup.phylosolutions.com&#34; target=&#34;_blank&#34;&gt;https://paup.phylosolutions.com&lt;/a&gt;. Copyright © David L. Swofford and Charles D. Bell.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MrBayes&lt;/strong&gt;: Huelsenbeck &amp;amp; Ronquist (2001); Ronquist et al. (2012). &lt;a href=&#34;https://github.com/NBISweden/MrBayes&#34; target=&#34;_blank&#34;&gt;https://github.com/NBISweden/MrBayes&lt;/a&gt;. GNU GPL-3.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IQ-TREE&lt;/strong&gt;: Nguyen et al. (2015); Minh et al. (2020). &lt;a href=&#34;https://github.com/iqtree/iqtree2&#34; target=&#34;_blank&#34;&gt;https://github.com/iqtree/iqtree2&lt;/a&gt;. GNU GPL-2.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BEAST 2&lt;/strong&gt;: Bouckaert et al. (2014, 2019). &lt;a href=&#34;https://github.com/CompEvol/beast2&#34; target=&#34;_blank&#34;&gt;https://github.com/CompEvol/beast2&lt;/a&gt;. GNU LGPL-2.1.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Barido-Sottani J, Aguirre-Fernández G, Hopkins MJ, Stadler T, Warnock RCM. 2019. Ignoring stratigraphic age uncertainty leads to erroneous estimates of species divergence times under the fossilized birth–death process. &lt;em&gt;Proc. R. Soc. B&lt;/em&gt; 286(1902): 20190685&lt;/li&gt;
+&lt;li&gt;Bleidorn C. 2017. &lt;em&gt;Phylogenomics: An Introduction.&lt;/em&gt; Cham, Switzerland: Springer&lt;/li&gt;
+&lt;li&gt;Bouckaert RR, Heled J, Kühnert D, Vaughan TG, Wu C-H, Xie D, Suchard MA, Rambaut A, Drummond AJ. 2014. BEAST 2: A software platform for Bayesian evolutionary analysis. &lt;em&gt;PLoS Comp. Biol.&lt;/em&gt; 10(4): e1003537&lt;/li&gt;
+&lt;li&gt;Bouckaert RR, Vaughan TG, Barido-Sottani J, Duchêne S, Fourment M, Gavryushkina A, Heled J, Jones G, Kühnert D, De Maio N, Matschiner M, Mendes FK, Müller NF, Ogilvie HA, du Plessis L, Popinga A, Rambaut A, Rasmussen D, Siveroni I, Suchard MA, Wu C-H, Xie D, Zhang C, Stadler T, Drummond AJ. 2019. BEAST 2.5: An advanced software platform for Bayesian evolutionary analysis. &lt;em&gt;PLoS Comp. Biol.&lt;/em&gt; 15(4): e1006650&lt;/li&gt;
+&lt;li&gt;Černý D, Simonoff AL. 2023. Statistical evaluation of character support reveals the instability of higher-level dinosaur phylogeny. &lt;em&gt;Sci. Reports&lt;/em&gt; 13(1): 9273&lt;/li&gt;
+&lt;li&gt;Drummond AJ, Chen K, Mendes FK, Xie D. 2023. LinguaPhylo: A probabilistic model specification language for reproducible phylogenetic analyses. &lt;em&gt;PLoS Comp. Biol.&lt;/em&gt; 19(7): e1011226&lt;/li&gt;
+&lt;li&gt;Felsenstein J. 2004. &lt;em&gt;Inferring Phylogenies.&lt;/em&gt; Sunderland, MA: Sinauer Associates&lt;/li&gt;
+&lt;li&gt;Gavryushkina A, Heath TA, Ksepka DT, Stadler T, Welch D, Drummond AJ. 2017. Bayesian total-evidence dating reveals the recent crown radiation of penguins. &lt;em&gt;Syst. Biol.&lt;/em&gt; 66(1): 57&amp;ndash;73&lt;/li&gt;
+&lt;li&gt;Gavryushkina A, Zhang C. 2021. Total-evidence dating and the fossilized birth–death model. 175&amp;ndash;193 in: Ho SYW, ed. &lt;em&gt;The Molecular Evolutionary Clock: Theory and Practice.&lt;/em&gt; Cham, Switzerland: Springer&lt;/li&gt;
+&lt;li&gt;Höhna S, Landis MJ, Heath TA, Boussau B, Lartillot N, Moore BR, Huelsenbeck JP, Ronquist F. 2016. RevBayes: Bayesian phylogenetic inference using graphical models and an interactive model-specification language. &lt;em&gt;Syst. Biol.&lt;/em&gt; 65(4): 726&amp;ndash;736&lt;/li&gt;
+&lt;li&gt;Huelsenbeck JP, Ronquist F. 2001. MRBAYES: Bayesian inference of phylogenetic trees. &lt;em&gt;Bioinform.&lt;/em&gt; 17(8): 754&amp;ndash;755&lt;/li&gt;
+&lt;li&gt;Khakurel B, Grigsby C, Tran TD, Zariwala J, Höhna S, Wright AM. 2024. The fundamental role of character coding in Bayesian morphological phylogenetics. &lt;em&gt;Syst. Biol.&lt;/em&gt; doi:10.1093/sysbio/syae033&lt;/li&gt;
+&lt;li&gt;King B, Qiao T, Lee MSY, Zhu M, Long JA. 2017. Bayesian morphological clock methods resurrect placoderm monophyly and reveal rapid early evolution in jawed vertebrates. &lt;em&gt;Syst. Biol.&lt;/em&gt; 66(4): 499&amp;ndash;516&lt;/li&gt;
+&lt;li&gt;Kozlov AM, Darriba D, Flouri T, Morel B, Stamatakis A. 2019. RAxML-NG: a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. &lt;em&gt;Bioinform.&lt;/em&gt; 35(21): 4453&amp;ndash;4455&lt;/li&gt;
+&lt;li&gt;Minh BQ, Schmidt HA, Chernomor O, Schrempf D, Woodhams MD, von Haeseler A, Lanfear R. 2020. IQ-TREE 2: New models and efficient methods for phylogenetic inference in the genomic era. &lt;em&gt;Mol. Biol. Evol.&lt;/em&gt; 37(5): 1530&amp;ndash;1534. Corrigendum: 37(8): 2461&lt;/li&gt;
+&lt;li&gt;Nazari V, Pasqualone A, Pieroni A, Todisco V, Belardinelli S, Pievani T. 2024. Evolution of the Italian &lt;em&gt;pasta ripiena&lt;/em&gt;: the first steps toward a scientific classification. &lt;em&gt;Discov. Food&lt;/em&gt; 4: 57&lt;/li&gt;
+&lt;li&gt;Nguyen L-T, Schmidt HA, von Haeseler A, Minh BQ. 2015. IQ-TREE: A fast and effective stochastic algorithm for estimating maximum-likelihood phylogenies. &lt;em&gt;Mol. Biol. Evol.&lt;/em&gt; 32(1): 268&amp;ndash;274&lt;/li&gt;
+&lt;li&gt;Ronquist F, Teslenko M, van der Mark P, Ayres DL, Darling A, Höhna S, Larget B, Liu L, Suchard MA, Huelsenbeck JP. 2012. MrBayes 3.2: Efficient Bayesian phylogenetic inference and model choice across a large model space. &lt;em&gt;Syst. Biol.&lt;/em&gt; 61(3): 539&amp;ndash;542&lt;/li&gt;
+&lt;li&gt;Ruebenstahl A, Mongiardino Koch N, Lamsdell JC, Briggs DEG. 2024. Convergent evolution of giant size in eurypterids. &lt;em&gt;Proc. R. Soc. B&lt;/em&gt; 291(2027): 20241184&lt;/li&gt;
+&lt;li&gt;Stadler T, Gavryushkina A, Warnock RCM, Drummond AJ, Heath TA. 2018. The fossilized birth-death model for the analysis of stratigraphic range data under different speciation modes. &lt;em&gt;J. Theor. Biol.&lt;/em&gt; 447: 41&amp;ndash;55&lt;/li&gt;
+&lt;li&gt;Stamatakis A. 2014. RAxML version 8: a tool for phylogenetic analysis and post-analysis of large phylogenies. &lt;em&gt;Bioinform.&lt;/em&gt; 30(9): 1312&amp;ndash;1313&lt;/li&gt;
+&lt;li&gt;Stamatakis A, Ludwig T, Meier H. 2004. A fast program for maximum likelihood-based inference of large phylogenetic trees. 197&amp;ndash;201 in: &lt;em&gt;SAC &amp;lsquo;04: Proceedings of the 2004 ACM Symposium on Applied Computing.&lt;/em&gt; New York, NY: Association for Computing Machinery&lt;/li&gt;
+&lt;li&gt;Swofford DL. 2002. &lt;em&gt;PAUP*: Phylogenetic Analysis Using Parsimony (*and Other Methods). Version 4.&lt;/em&gt; Sunderland, MA: Sinauer Associates&lt;/li&gt;
+&lt;li&gt;Tedford RH, Wang X-M, Taylor BE. 2009. Phylogenetic systematics of the North American fossil Caninae (Carnivora: Canidae). &lt;em&gt;Bull. Am. Mus. Nat. Hist.&lt;/em&gt; 325: 1&amp;ndash;218&lt;/li&gt;
+&lt;li&gt;Warnock RCM, Wright AM. 2020. Understanding the tripartite approach to Bayesian divergence time estimation. In: Sumrall CD, ed. &lt;em&gt;Elements of Paleontology.&lt;/em&gt; Cambridge, UK: Cambridge University Press&lt;/li&gt;
+&lt;li&gt;Wright AM, Wynd BM. 2024. Modeling of rate heterogeneity in datasets compiled for use with parsimony. &lt;em&gt;bioRxiv&lt;/em&gt; doi:10.&lt;sup&gt;1101&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2024&lt;/sub&gt;.06.26.600858v1&lt;/li&gt;
+&lt;li&gt;Yang Z. 2014. &lt;em&gt;Molecular Evolution: A Statistical Approach.&lt;/em&gt; Oxford, UK: Oxford University Press&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:0&#34;&gt;This is, in fact, an important &amp;ndash; and I think underappreciated &amp;ndash; cultural distinction between morphological and molecular phylogenetics. For people with a molecular background, phylogenetics mostly begins once the dataset has been assembled, and the question arises of what to do with it. Textbooks like Felsenstein (2004) or Yang (2014) don&amp;rsquo;t start with instructions on how to operate an Illumina sequencer, and it would be strange if they did (though see Bleidorn 2017). It is only with the problem of co-inferring alignment and phylogeny &amp;ndash; a practice long recognized as desirable but often computationally prohibitive &amp;ndash; that the dataset is not treated as a given. On the other hand, paleontologists sometimes seem to believe almost the exact opposite: that phylogenetics &lt;em&gt;ends&lt;/em&gt; with the assembly of the character matrix, and once that crucial step has been accomplished, it matters little what methods one uses to analyze it. This belief (which Graham&amp;rsquo;s course did its best to combat) is usually justified by the argument that if the matrix is &amp;ldquo;flawed&amp;rdquo; or &amp;ldquo;miscoded&amp;rdquo;, no method will be able to extract useful phylogenetic information from it &amp;ndash; often summed up by the catchphrase &amp;ldquo;garbage in, garbage out&amp;rdquo;. Exactly what that implies about the readiness of paleontologists to believe that their colleagues are in the habit of producing garbage is left as an exercise to the reader.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:0&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;With a big hit to performance, of course, due to the overhead introduced by the interpreter.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;In part, this probably reflects the fact that the issue is just a particular instance of a more general problem, namely the fact that Rev is strongly but implicitly typed. The choice is certainly justifiable, as it makes it easy for Rev to interface with the C++ back end, while keeping the front end simple for biologists who are most likely to be familiar with dynamically typed languages like R and Python. However, in cases like this, it can feel like the worst of both worlds. Even though every probability is also a nonnegative real (&amp;rdquo;&lt;code&gt;RealPos&lt;/code&gt;&amp;rdquo; in Rev parlance), &lt;code&gt;Dist_unifProbability&lt;/code&gt; does not derive from &lt;code&gt;Distribution__RealPos&lt;/code&gt;, so you can&amp;rsquo;t plug it into &lt;code&gt;dnUniformTopologyBranchLength&lt;/code&gt; which expects the latter &amp;ndash; something that wouldn&amp;rsquo;t happen in a weakly typed language. You&amp;rsquo;d be forgiven for thinking that the next best thing would be to explicitly cast 0.5 as a &lt;code&gt;RealPos&lt;/code&gt; rather than a &lt;code&gt;Probability&lt;/code&gt;, but alas, you don&amp;rsquo;t get explicit casts with implicit typing. (In reality, it&amp;rsquo;s even worse: Rev actually &lt;em&gt;does&lt;/em&gt; have a function-style cast for converting from &lt;code&gt;RealPos&lt;/code&gt; to &lt;code&gt;Probability&lt;/code&gt;, but not one to go from &lt;code&gt;Probability&lt;/code&gt; to &lt;code&gt;RealPos&lt;/code&gt;.)
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;I&amp;rsquo;ve taken the liberty of discussing it with the authors of Khakurel et al. (2024), and I don&amp;rsquo;t think the proposed solution would work even if the problem were real, which is also somewhat questionable.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;Dave Swofford has been promising to make PAUP* open-source for many years now. Here&amp;rsquo;s hoping it actually happens someday.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:5&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>A new abelisaurid dinosaur from the end Cretaceous of Patagonia and evolutionary rates among the Ceratosauria</title>
