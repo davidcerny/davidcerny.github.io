@@ -5,7 +5,7 @@
     <link>/categories/</link>
       <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <description>Categories</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Oct 2024 22:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 28 Oct 2024 00:30:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Categories</title>
@@ -15,7 +15,7 @@
     <item>
       <title>RevBayes</title>
       <link>/categories/revbayes/</link>
-      <pubDate>Sat, 05 Oct 2024 22:00:00 +0000</pubDate>
+      <pubDate>Mon, 28 Oct 2024 00:30:00 +0000</pubDate>
       <guid>/categories/revbayes/</guid>
       <description></description>
     </item>
